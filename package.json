@@ -1,0 +1,29 @@
+{
+  "name": "ladder",
+  "description": "Elo ranking web app.",
+  "version": "0.0.1",
+  "author": "Andy Jiang",
+  "main": "bin/server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lambtron/ladder"
+  },
+  "engines": {
+    "node": "^0.11.14",
+    "npm": "^2.1.x"
+  },
+  "private": true,
+  "dependencies": {
+    "co-monk": "^1.0.0",
+    "co-views": "^0.2.0",
+    "elo-rank": "^0.2.2",
+    "koa": "^0.13.0",
+    "koa-bodyparser": "^1.2.0",
+    "koa-logger": "^1.2.2",
+    "koa-route": "^2.2.0",
+    "koa-static": "^1.4.9",
+    "monk": "^1.0.0",
+    "swig": "^1.4.2",
+    "thunkify-wrap": "^1.0.4"
+  }
+}

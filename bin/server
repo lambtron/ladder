@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var PORT = process.env.PORT || 3000;
+var serve = require('koa-static');
+var route = require('koa-route');
+var koa = require('koa');
+
+/**
+ * Expose `app`.
+ */
+
+exports = app = koa();
+
+/**
+ * Setup static directory.
+ */
+
+app.use(serve('public'));
+
+/**
+ * Configure routes.
+ */
+
+var routes = require('../server/routes.js');
+app.use(route.get('/', routes.index));
+
+/**
+ * Listen on PORT.
+ */
+
+app.listen(PORT);
+console.log('listening on port ' + PORT);
