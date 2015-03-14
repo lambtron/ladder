@@ -33,6 +33,12 @@ Button.prototype.render = function (props, state) {
   return dom("button", { onClick: this.onClick }, "Click me");
 };
 
+/**
+ * Expose `Button`.
+ */
+
+module.exports = Button;
+
 },{"./deku/index.js":2}],2:[function(require,module,exports){
 (function (global){
 "use strict";

@@ -27,3 +27,8 @@ Button.prototype.render = function(props, state) {
   return dom('button', { onClick: this.onClick }, 'Click me');
 };
 
+/**
+ * Expose `Button`.
+ */
+
+export default Button;
