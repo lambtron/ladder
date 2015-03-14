@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+var parser = require('koa-bodyparser');
 var PORT = process.env.PORT || 3000;
 var serve = require('koa-static');
 var route = require('koa-route');
@@ -20,6 +21,12 @@ exports = app = koa();
  */
 
 app.use(serve('client'));
+
+/**
+ * Use body parser.
+ */
+
+app.use(parser());
 
 /**
  * Configure routes.
