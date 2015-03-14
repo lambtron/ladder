@@ -3,7 +3,7 @@
 # Binaries.
 #
 
-duo = ./node_modules/.bin/duo --development --copy
+browserify = ./node_modules/.bin/browserify --development --copy
 nodemon = ./node_modules/.bin/nodemon --harmony --quiet
 
 #
@@ -22,15 +22,19 @@ clean:
 
 # Run the server in debug mode.
 debug: node_modules
-	@node debug --harmony bin/server --development
+	@node debug --harmony server/server --development
 
 # Run the server.
 run: node_modules
-	@node --harmony bin/server
+	@node --harmony server/server
 
 # Run the server with nodemon for development.
 server: node_modules
-	@$(nodemon) --watch bin --watch server bin/server --development
+	@$(nodemon) --watch server --watch server server/server --development
+
+# Build client.
+build: node_modules
+	browserify client/js/index.js -t babelify --outfile client/bundle.js
 
 #
 # Targets.

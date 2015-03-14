@@ -4,7 +4,7 @@
  */
 
 var views = require('co-views');
-var swig = views(__dirname + '/../public/views', { map: { html: 'swig' } });
+var swig = views(__dirname + '/../../client/', { map: { html: 'swig' } });
 
 /**
  * Expose `swig`.

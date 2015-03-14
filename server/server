@@ -19,14 +19,17 @@ exports = app = koa();
  * Setup static directory.
  */
 
-app.use(serve('public'));
+app.use(serve('client'));
 
 /**
  * Configure routes.
  */
 
-var routes = require('../server/routes.js');
+var routes = require('./lib/routes.js');
 app.use(route.get('/', routes.index));
+app.use(route.post('/api/create', routes.create));
+app.use(route.post('/api/remove', routes.remove));
+app.use(route.post('/api/results', routes.results));
 
 /**
  * Listen on PORT.
