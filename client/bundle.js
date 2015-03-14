@@ -1,19 +1,37 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
 
+/**
+ * Module dependencies.
+ */
+
 var _deku = require("deku");
 
 var component = _deku.component;
 var dom = _deku.dom;
 
-var Button = component({
-  onClick: function onClick(e) {
+/**
+ * Define `Button`.
+ */
+
+var Button = component();
+
+/**
+ * Expose `Button`.
+ */
+
+Button.prototype.render = function (props, state) {
+
+  /**
+   * Click handler.
+   */
+
+  function onClick(e) {
     console.log("Clicked!");
-  },
-  render: function render() {
-    return dom("button", { onClick: this.onClick }, "Click me");
   }
-});
+
+  return dom("button", { onClick: this.onClick }, "Click me");
+};
 
 },{"deku":7}],2:[function(require,module,exports){
 "use strict";
@@ -2444,7 +2462,7 @@ var now = require('right-now')
 
 module.exports = Engine
 function Engine(fn) {
-    if (!(this instanceof Engine))
+    if (!(this instanceof Engine)) 
         return new Engine(fn)
     this.running = false
     this.last = now()
@@ -2458,7 +2476,7 @@ function Engine(fn) {
 inherits(Engine, EventEmitter)
 
 Engine.prototype.start = function() {
-    if (this.running)
+    if (this.running) 
         return
     this.running = true
     this.last = now()
