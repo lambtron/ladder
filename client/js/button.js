@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-import {component,dom} from 'deku';
+import {component,dom} from './deku/index.js';
 
 /**
  * Define `Button`.
