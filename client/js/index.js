@@ -1,3 +1,12 @@
-import Button from './button';
 
-Button.render(document.body);
+/**
+ * Module dependencies.
+ */
+
+import App from './app/index.js';
+
+/**
+ * Render.
+ */
+
+App.render(document.body);

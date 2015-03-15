@@ -16,6 +16,14 @@ exports.index = function *() {
 };
 
 /**
+ * List users.
+ */
+
+exports.list = function *() {
+  return this.body = yield User.find({});
+};
+
+/**
  * Create user
  */
 
