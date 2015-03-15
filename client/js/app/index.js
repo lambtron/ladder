@@ -5,9 +5,9 @@
  */
 
 import {component,dom} from '../lib/deku/index.js';
-import NewPlayer from '../new-player/index.js';
-import NewGame from '../new-game/index.js';
+import Player from '../player/index.js';
 import Button from '../button/index.js';
+import Game from '../game/index.js';
 import List from '../list/index.js';
 
 /**

@@ -8,22 +8,29 @@ import {component,dom} from '../lib/deku/index.js';
 import Button from '../button/index.js';
 
 /**
- * Define `NewGame`.
+ * Constants.
  */
 
-var NewGame = component();
+const request = require('superagent');
 
 /**
- * Expose `NewGame`.
+ * Define `Game`.
  */
 
-export default NewGame;
+var Game = component()
+  .prop('visible', { type: 'boolean' });
+
+/**
+ * Expose `Game`.
+ */
+
+export default Game;
 
 /**
  * Submit results.
  */
 
-NewGame.prototype.results = function(outcome) {
+Game.prototype.results = function(outcome) {
   var url = '/api/results';
   request.post(url).send(outcome).end(function(err, res) {
     // do something.
@@ -31,10 +38,10 @@ NewGame.prototype.results = function(outcome) {
 };
 
 /**
- * Render `NewGame`.
+ * Render `Game`.
  */
 
-NewGame.prototype.render = function(props, state) {
+Game.prototype.render = function(props, state) {
   var outcome = {
     winner: 'BeastLee',
     loser: 'DinnerNugget'
