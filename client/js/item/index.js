@@ -11,7 +11,7 @@ import {component,dom} from '../lib/deku/index.js';
  */
 
 var Item = component()
-  .prop('item', { type: 'object' });
+  .prop('player', { type: 'object' });
 
 /**
  * Export `Item`.
@@ -24,17 +24,15 @@ export default Item;
  */
 
 Item.prototype.render = function(props, state) {
-  var item = props.item;
-  var name = item.name;
-  var rating = item.rating;
+  var player = props.player;
 
   return (
     <div>
       <span>
-        { name }
+        { player.name }
       </span>
       <span>
-        { rating }
+        { player.rating }
       </span>
     </div>
   );

@@ -35,7 +35,21 @@ module.exports = App;
  */
 
 App.prototype.render = function (props, state) {
-  return dom(List, null);
+  return dom(
+    "div",
+    { "class": "container" },
+    dom(
+      "div",
+      { "class": "row" },
+      dom(List, null)
+    ),
+    dom(
+      "div",
+      { "class": "row" },
+      dom(Button, { label: "NEW PLAYER" }),
+      dom(Button, { label: "NEW GAME" })
+    )
+  );
 };
 
 },{"../button/index.js":2,"../lib/deku/index.js":5,"../list/index.js":6}],2:[function(require,module,exports){
@@ -62,7 +76,7 @@ var request = require("superagent");
  * Define `Button`.
  */
 
-var Button = component();
+var Button = component().prop("label", { type: "string" }).prop("type", { type: "object" });
 
 /**
  * Expose `Button`.
@@ -71,24 +85,44 @@ var Button = component();
 module.exports = Button;
 
 /**
- * Render `Button`.
- */
-
-Button.prototype.render = function (props, state) {
-  return dom(
-    "div",
-    null,
-    "button"
-  );
-};
-
-/**
  * Create user.
  */
+
+Button.prototype.create = function () {
+  var url = "/api/create";
+  request.post(url).end(function (err, res) {});
+};
 
 /**
  * Add game.
  */
+
+Button.prototype.results = function () {
+  var url = "/api/results";
+  request.post(url).end(function (err, res) {});
+};
+
+/**
+ * Render `Button`.
+ */
+
+Button.prototype.render = function (props, state) {
+  console.log(props);
+
+  var label = props.label;
+  var type = props.type;
+
+  return dom(
+    "div",
+    { "class": "btn" },
+    label
+  );
+};
+
+// do something.
+// setState({ list: res.body });
+
+// do something.
 
 },{"../lib/deku/index.js":5,"superagent":7}],3:[function(require,module,exports){
 "use strict";
@@ -125,7 +159,7 @@ var dom = _libDekuIndexJs.dom;
  * Define `Item`.
  */
 
-var Item = component().prop("item", { type: "object" });
+var Item = component().prop("player", { type: "object" });
 
 /**
  * Export `Item`.
@@ -138,9 +172,7 @@ module.exports = Item;
  */
 
 Item.prototype.render = function (props, state) {
-  var item = props.item;
-  var name = item.name;
-  var rating = item.rating;
+  var player = props.player;
 
   return dom(
     "div",
@@ -148,12 +180,12 @@ Item.prototype.render = function (props, state) {
     dom(
       "span",
       null,
-      name
+      player.name
     ),
     dom(
       "span",
       null,
-      rating
+      player.rating
     )
   );
 };
@@ -3715,18 +3747,22 @@ List.prototype.beforeMount = function (props, state, prevProps, prevState) {
  */
 
 List.prototype.render = function (props, state) {
+  console.log("render");
+  console.log(props);
+  console.log(state);
+
   var list = props.list;
+
+  list = [{ name: "BeastLee", rating: 1500 }, { name: "DinnerNugget", rating: 1800 }, { name: "Lambtron", rating: 1200 }, { name: "Steven", rating: 1100 }];
 
   // Sort by rating
   function sortByRating(a, b) {
-    return;
+    return a.rating > b.rating ? -1 : 1;
   }
 
   // Create rows and sort them by rating
-  var rows = list
-  // .sort(sortByRating)
-  .map(function (item) {
-    return dom(Item, { item: item });
+  var rows = list.sort(sortByRating).map(function (player) {
+    return dom(Item, { player: player });
   });
 
   // Return rows.

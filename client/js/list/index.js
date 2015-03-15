@@ -63,19 +63,30 @@ List.prototype.beforeMount = function(props, state, prevProps, prevState) {
  */
 
 List.prototype.render = function(props, state) {
+  console.log('render');
+  console.log(props);
+  console.log(state);
+
   var list = props.list;
+
+  list = [
+    { name: 'BeastLee', rating: 1500 },
+    { name: 'DinnerNugget', rating: 1800 },
+    { name: 'Lambtron', rating: 1200 },
+    { name: 'Steven', rating: 1100 }
+  ];
 
   // Sort by rating
   function sortByRating(a, b) {
-    return;
+    return a.rating > b.rating ? -1 : 1;
   }
 
   // Create rows and sort them by rating
   var rows = list
-    // .sort(sortByRating)
-    .map(function(item) {
+    .sort(sortByRating)
+    .map(function(player) {
       return (
-        <Item item={ item } />
+        <Item player={ player } />
       );
     });
 

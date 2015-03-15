@@ -16,7 +16,8 @@ const request = require('superagent');
  * Define `Button`.
  */
 
-var Button = component();
+var Button = component()
+  .prop('label', { type: 'string' });
 
 /**
  * Expose `Button`.
@@ -29,19 +30,11 @@ export default Button;
  */
 
 Button.prototype.render = function(props, state) {
+  var label = props.label;
+
   return (
-    <div>
-      button
+    <div class='btn'>
+      { label }
     </div>
   );
 };
-
-/**
- * Create user.
- */
-
-
-
-/**
- * Add game.
- */
