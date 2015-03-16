@@ -3,7 +3,7 @@
   "description": "An Elo rating web app.",
   "repository": "https://github.com/lambtron/ladder",
   "website": "https://andyjiang.com",
-  "addons": ["mongolab:shared-single-small"],
+  "addons": ["mongolab:sandbox"],
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
   "keywords": ["elo", "rating", "ladder", "ranking", "ping pong", "pong", "chess"]
 }
