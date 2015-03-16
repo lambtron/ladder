@@ -33,14 +33,24 @@ $ heroku open
 
 #### GET /api/list
 
-Get the list of all players in the database.
+Get the list of all players in the database. This is a sample response:
 
 ```javascript
+[
+  {
+    name: 'BeastLee',
+    rating: 1500
+  },
+  {
+    name: 'DinnerNugget',
+    rating: 1800
+  }
+]
 ```
 
 #### POST /api/create
 
-Create a new player in the database. Content-type is application/json with sample body below.
+Create a new player in the database. Content-type is application/json with sample body below. All players start with rating at 1500.
 
 ```javascript
 {
