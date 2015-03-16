@@ -25,7 +25,7 @@ debug: node_modules
 	@node debug --harmony server/server --development
 
 # Run the server.
-run: node_modules
+run: node_modules build
 	@node --harmony server/server
 
 # Run the server with nodemon for development.
