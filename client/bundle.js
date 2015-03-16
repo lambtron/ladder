@@ -75,12 +75,12 @@ App.prototype.render = function (props, state) {
     ),
     dom(
       "div",
-      null,
+      { "class": "container" },
       dom(Player, { visible: showPlayer })
     ),
     dom(
       "div",
-      null,
+      { "class": "container" },
       dom(Game, { visible: showGame })
     )
   );
@@ -208,19 +208,27 @@ Game.prototype.render = function (props, state) {
     "div",
     null,
     dom(
-      "span",
-      null,
-      dom(SelectList, { label: "WINNER", list: list, onChange: update })
-    ),
-    dom(
-      "span",
-      null,
-      dom(SelectList, { label: "LOSER", list: list, onChange: update })
+      "div",
+      { "class": "row" },
+      dom(
+        "div",
+        { "class": "col-xs-6" },
+        dom(SelectList, { label: "WINNER", list: list, onChange: update })
+      ),
+      dom(
+        "div",
+        { "class": "col-xs-6" },
+        dom(SelectList, { label: "LOSER", list: list, onChange: update })
+      )
     ),
     dom(
       "div",
-      null,
-      dom(Button, { label: "SUBMIT", onClick: submit })
+      { "class": "row" },
+      dom(
+        "div",
+        { "class": "col-xs-12" },
+        dom(Button, { label: "SUBMIT", onClick: submit })
+      )
     )
   );
 };
@@ -4031,14 +4039,26 @@ Player.prototype.render = function (props, state) {
     null,
     dom(
       "div",
-      null,
-      dom(Input, { name: "player", placeholder: "username", onValid: value })
+      { "class": "row" },
+      dom(
+        "div",
+        { "class": "col-xs-12" },
+        dom(Input, { name: "player", placeholder: "username", onValid: value })
+      )
     ),
     dom(
       "div",
-      null,
-      dom(Button, { label: "CANCEL", onClick: cancel }),
-      dom(Button, { label: "ADD", onClick: create })
+      { "class": "row" },
+      dom(
+        "div",
+        { "class": "col-xs-6" },
+        dom(Button, { label: "CANCEL", onClick: cancel })
+      ),
+      dom(
+        "div",
+        { "class": "col-xs-6" },
+        dom(Button, { label: "ADD", onClick: create })
+      )
     )
   );
 };
@@ -4099,7 +4119,7 @@ SelectList.prototype.render = function (props, state) {
 
   return dom(
     "select",
-    { value: "", onChange: onChange },
+    { value: "", onChange: onChange, style: "width: 100%" },
     dom(
       "option",
       { selected: true, disabled: true },
