@@ -29,10 +29,10 @@ Item.prototype.render = function(props, state) {
   return (
     <div>
       <span>
-        { player.name }
+        {player.name}
       </span>
-      <span>
-        { player.rating }
+      <span class='pull-right'>
+        {player.rating}
       </span>
     </div>
   );

@@ -17,7 +17,8 @@ const request = require('superagent');
  */
 
 var Button = component()
-  .prop('label', { type: 'string' });
+  .prop('label', { type: 'string' })
+  .prop('onClick', { type: 'function' });
 
 /**
  * Expose `Button`.
@@ -31,10 +32,11 @@ export default Button;
 
 Button.prototype.render = function(props, state) {
   var label = props.label;
+  var onClick = props.onClick;
 
   return (
-    <div class='btn'>
-      { label }
+    <div class='btn btn-primary' onClick={onClick} style='width: 100%'>
+      {label}
     </div>
   );
 };

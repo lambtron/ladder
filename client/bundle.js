@@ -14,7 +14,11 @@ var _libDekuIndexJs = require("../lib/deku/index.js");
 var component = _libDekuIndexJs.component;
 var dom = _libDekuIndexJs.dom;
 
+var Player = _interopRequire(require("../player/index.js"));
+
 var Button = _interopRequire(require("../button/index.js"));
+
+var Game = _interopRequire(require("../game/index.js"));
 
 var List = _interopRequire(require("../list/index.js"));
 
@@ -35,24 +39,54 @@ module.exports = App;
  */
 
 App.prototype.render = function (props, state) {
+  var showPlayer,
+      showGame = false;
+
   return dom(
     "div",
-    { "class": "container" },
+    { "class": "", style: "font-size: 2em" },
     dom(
       "div",
-      { "class": "row" },
-      dom(List, null)
+      { "class": "container" },
+      dom(
+        "div",
+        { "class": "row list" },
+        dom(
+          "div",
+          { "class": "col-xs-12" },
+          dom(List, null)
+        )
+      ),
+      dom("br", null),
+      dom(
+        "div",
+        { "class": "row" },
+        dom(
+          "div",
+          { "class": "col-xs-6" },
+          dom(Button, { label: "NEW PLAYER", onClick: showPlayer = !showPlayer })
+        ),
+        dom(
+          "div",
+          { "class": "col-xs-6" },
+          dom(Button, { label: "NEW GAME", onClick: showGame = !showGame })
+        )
+      )
     ),
     dom(
       "div",
-      { "class": "row" },
-      dom(Button, { label: "NEW PLAYER" }),
-      dom(Button, { label: "NEW GAME" })
+      null,
+      dom(Player, { visible: showPlayer })
+    ),
+    dom(
+      "div",
+      null,
+      dom(Game, { visible: showGame })
     )
   );
 };
 
-},{"../button/index.js":2,"../lib/deku/index.js":5,"../list/index.js":6}],2:[function(require,module,exports){
+},{"../button/index.js":2,"../game/index.js":3,"../lib/deku/index.js":6,"../list/index.js":8,"../player/index.js":9}],2:[function(require,module,exports){
 "use strict";
 
 /** @jsx dom */
@@ -76,7 +110,7 @@ var request = require("superagent");
  * Define `Button`.
  */
 
-var Button = component().prop("label", { type: "string" }).prop("type", { type: "object" });
+var Button = component().prop("label", { type: "string" }).prop("onClick", { type: "function" });
 
 /**
  * Expose `Button`.
@@ -85,46 +119,115 @@ var Button = component().prop("label", { type: "string" }).prop("type", { type: 
 module.exports = Button;
 
 /**
- * Create user.
- */
-
-Button.prototype.create = function () {
-  var url = "/api/create";
-  request.post(url).end(function (err, res) {});
-};
-
-/**
- * Add game.
- */
-
-Button.prototype.results = function () {
-  var url = "/api/results";
-  request.post(url).end(function (err, res) {});
-};
-
-/**
  * Render `Button`.
  */
 
 Button.prototype.render = function (props, state) {
-  console.log(props);
-
   var label = props.label;
-  var type = props.type;
+  var onClick = props.onClick;
 
   return dom(
     "div",
-    { "class": "btn" },
+    { "class": "btn btn-primary", onClick: onClick, style: "width: 100%" },
     label
   );
 };
 
-// do something.
-// setState({ list: res.body });
+},{"../lib/deku/index.js":6,"superagent":11}],3:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+/** @jsx dom */
+
+/**
+ * Module dependencies.
+ */
+
+var _libDekuIndexJs = require("../lib/deku/index.js");
+
+var component = _libDekuIndexJs.component;
+var dom = _libDekuIndexJs.dom;
+
+var SelectList = _interopRequire(require("../select-list/index.js"));
+
+var Button = _interopRequire(require("../button/index.js"));
+
+/**
+ * Constants.
+ */
+
+var request = require("superagent");
+
+/**
+ * Define `Game`.
+ */
+
+var Game = component().prop("visible", { type: "boolean" }).prop("list", { type: "array" });
+
+/**
+ * Expose `Game`.
+ */
+
+module.exports = Game;
+
+/**
+ * Submit results.
+ */
+
+Game.prototype.results = function (outcome) {
+  var url = "/api/results";
+  request.post(url).send(outcome).end(function (err, res) {});
+};
+
+/**
+ * Render `Game`.
+ */
+
+Game.prototype.render = function (props, state) {
+  var visible = props.visible;
+  var list = props.list;
+  var outcome = {};
+  var self = this;
+
+  // Update selection.
+  function update(username, label) {
+    outcome[label.toLowerCase()] = username;
+    // find username in list and disable it.
+  }
+
+  // Submit results.
+  function submit() {
+    self.results(outcome);
+  }
+
+  // hack for now.
+  list = [{ name: "BeastLee", rating: 1500, disabled: false }, { name: "DinnerNugget", rating: 1800, disabled: false }, { name: "Lambtron", rating: 1200, disabled: false }, { name: "Steven", rating: 1100, disabled: false }];
+
+  return dom(
+    "div",
+    null,
+    dom(
+      "span",
+      null,
+      dom(SelectList, { label: "WINNER", list: list, onChange: update })
+    ),
+    dom(
+      "span",
+      null,
+      dom(SelectList, { label: "LOSER", list: list, onChange: update })
+    ),
+    dom(
+      "div",
+      null,
+      dom(Button, { label: "SUBMIT", onClick: submit })
+    )
+  );
+};
 
 // do something.
 
-},{"../lib/deku/index.js":5,"superagent":7}],3:[function(require,module,exports){
+},{"../button/index.js":2,"../lib/deku/index.js":6,"../select-list/index.js":10,"superagent":11}],4:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -141,7 +244,7 @@ var App = _interopRequire(require("./app/index.js"));
 
 App.render(document.body);
 
-},{"./app/index.js":1}],4:[function(require,module,exports){
+},{"./app/index.js":1}],5:[function(require,module,exports){
 "use strict";
 
 /** @jsx dom */
@@ -156,41 +259,50 @@ var component = _libDekuIndexJs.component;
 var dom = _libDekuIndexJs.dom;
 
 /**
- * Define `Item`.
+ * Define `Input`.
  */
 
-var Item = component().prop("player", { type: "object" });
+var Input = component().prop("name", { type: "string" }).prop("placeholder", { type: "string" }).prop("defaultValue", { type: "string" }).prop("onInput", { type: "function" }).prop("onChange", { type: "function" }).prop("onValid", { type: "function" });
 
 /**
- * Export `Item`.
+ * Expose `Input`.
  */
 
-module.exports = Item;
+module.exports = Input;
 
 /**
- * Render `Item`.
+ * Render `Input`.
  */
 
-Item.prototype.render = function (props, state) {
-  var player = props.player;
+Input.prototype.render = function (props, state) {
+  var name = props.name;
+  var placeholder = props.placeholder || "";
+  var defaultValue = props.defaultValue || "";
+  var onChange = props.onChange || noop;
 
-  return dom(
-    "div",
-    null,
-    dom(
-      "span",
-      null,
-      player.name
-    ),
-    dom(
-      "span",
-      null,
-      player.rating
-    )
-  );
+  // onInput.
+  function onInput(e) {
+    var value = e.target.value;
+    if (props.onValid) props.onValid(value, name);
+    if (props.onInput) props.onInput(e);
+  }
+
+  return dom("input", {
+    type: "text",
+    name: name,
+    defaultValue: defaultValue,
+    placeholder: placeholder,
+    onChange: onChange,
+    onInput: onInput });
 };
 
-},{"../lib/deku/index.js":5}],5:[function(require,module,exports){
+/**
+ * Strictly for nooping purposes.
+ */
+
+function noop() {};
+
+},{"../lib/deku/index.js":6}],6:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3679,7 +3791,56 @@ Item.prototype.render = function (props, state) {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+"use strict";
+
+/** @jsx dom */
+
+/**
+ * Module dependencies.
+ */
+
+var _libDekuIndexJs = require("../lib/deku/index.js");
+
+var component = _libDekuIndexJs.component;
+var dom = _libDekuIndexJs.dom;
+
+/**
+ * Define `Item`.
+ */
+
+var Item = component().prop("player", { type: "object" });
+
+/**
+ * Export `Item`.
+ */
+
+module.exports = Item;
+
+/**
+ * Render `Item`.
+ */
+
+Item.prototype.render = function (props, state) {
+  var player = props.player;
+
+  return dom(
+    "div",
+    null,
+    dom(
+      "span",
+      null,
+      player.name
+    ),
+    dom(
+      "span",
+      { "class": "pull-right" },
+      player.rating
+    )
+  );
+};
+
+},{"../lib/deku/index.js":6}],8:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -3695,7 +3856,7 @@ var _libDekuIndexJs = require("../lib/deku/index.js");
 var component = _libDekuIndexJs.component;
 var dom = _libDekuIndexJs.dom;
 
-var Item = _interopRequire(require("../item/index.js"));
+var ListItem = _interopRequire(require("../list-item/index.js"));
 
 /**
  * Constants.
@@ -3719,7 +3880,7 @@ module.exports = List;
  * Get players.
  */
 
-List.prototype.get = function () {
+List.prototype.players = function () {
   var setState = this.setState;
   var url = "/api/list";
 
@@ -3739,7 +3900,34 @@ List.prototype.get = function () {
 
 List.prototype.beforeMount = function (props, state, prevProps, prevState) {
   console.log("before mount");
-  this.get();
+  this.players();
+};
+
+List.prototype.propsChanged = function (props) {
+  console.log("props changed");
+};
+
+List.prototype.afterMount = function (el, props, state) {
+  console.log("after mount");
+  console.log(props);
+  console.log(state);
+  this.players();
+};
+
+List.prototype.beforeUpdate = function (props, state, nextProps, nextState) {
+  console.log("before update");
+};
+
+List.prototype.afterUpdate = function (props, state, prevProps, prevState) {
+  console.log("after update");
+};
+
+List.prototype.beforeUnmount = function (el, props, state) {
+  console.log("before unmount");
+};
+
+List.prototype.afterUnmount = function (props, state) {
+  console.log("after unmount");
 };
 
 /**
@@ -3747,11 +3935,7 @@ List.prototype.beforeMount = function (props, state, prevProps, prevState) {
  */
 
 List.prototype.render = function (props, state) {
-  console.log("render");
-  console.log(props);
-  console.log(state);
-
-  var list = props.list;
+  var list = props.list || [];
 
   list = [{ name: "BeastLee", rating: 1500 }, { name: "DinnerNugget", rating: 1800 }, { name: "Lambtron", rating: 1200 }, { name: "Steven", rating: 1100 }];
 
@@ -3762,7 +3946,7 @@ List.prototype.render = function (props, state) {
 
   // Create rows and sort them by rating
   var rows = list.sort(sortByRating).map(function (player) {
-    return dom(Item, { player: player });
+    return dom(ListItem, { player: player });
   });
 
   // Return rows.
@@ -3773,7 +3957,159 @@ List.prototype.render = function (props, state) {
   );
 };
 
-},{"../item/index.js":4,"../lib/deku/index.js":5,"superagent":7}],7:[function(require,module,exports){
+},{"../lib/deku/index.js":6,"../list-item/index.js":7,"superagent":11}],9:[function(require,module,exports){
+"use strict";
+
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
+
+/** @jsx dom */
+
+/**
+ * Module dependencies.
+ */
+
+var _libDekuIndexJs = require("../lib/deku/index.js");
+
+var component = _libDekuIndexJs.component;
+var dom = _libDekuIndexJs.dom;
+
+var Button = _interopRequire(require("../button/index.js"));
+
+var Input = _interopRequire(require("../input/index.js"));
+
+/**
+ * Constants.
+ */
+
+var request = require("superagent");
+
+/**
+ * Define `Player`.
+ */
+
+var Player = component().prop("visible", { type: "boolean" });
+
+/**
+ * Expose `Player`.
+ */
+
+module.exports = Player;
+
+/**
+ * Create player.
+ */
+
+Player.prototype.create = function (name) {
+  var url = "/api/create";
+  request.post(url).send({ name: name }).end(function (err, res) {});
+};
+
+/**
+ * Render `Player`.
+ */
+
+Player.prototype.render = function (props, state) {
+  var self = this;
+  var username = "";
+  var visible = props.visible || false;
+
+  // Get input value.
+  function value(value, name) {
+    username = value;
+  }
+
+  // Create player.
+  function create() {
+    self.create(username);
+  }
+
+  // Cancel.
+  function cancel() {}
+
+  return dom(
+    "div",
+    null,
+    dom(
+      "div",
+      null,
+      dom(Input, { name: "player", placeholder: "username", onValid: value })
+    ),
+    dom(
+      "div",
+      null,
+      dom(Button, { label: "CANCEL", onClick: cancel }),
+      dom(Button, { label: "ADD", onClick: create })
+    )
+  );
+};
+
+// do something.
+// setState({ list: res.body });
+
+// cancel.
+
+},{"../button/index.js":2,"../input/index.js":5,"../lib/deku/index.js":6,"superagent":11}],10:[function(require,module,exports){
+"use strict";
+
+/** @jsx dom */
+
+/**
+ * Module dependencies.
+ */
+
+var _libDekuIndexJs = require("../lib/deku/index.js");
+
+var component = _libDekuIndexJs.component;
+var dom = _libDekuIndexJs.dom;
+
+/**
+ * Define `SelectList`.
+ */
+
+var SelectList = component().prop("label", { type: "string" }).prop("list", { type: "array" }).prop("onChange", { type: "function" });
+
+/**
+ * Expose `SelectList`.
+ */
+
+module.exports = SelectList;
+
+/**
+ * Render `SelectList`.
+ */
+
+SelectList.prototype.render = function (props, state) {
+  var label = props.label;
+  var list = props.list;
+
+  // On change.
+  function onChange(e) {
+    var value = e.target.value;
+    if (props.onChange) props.onChange(value, label);
+  }
+
+  // Get players.
+  var rows = list.map(function (player) {
+    return dom(
+      "option",
+      { value: player.name, disabled: player.disabled },
+      player.name
+    );
+  });
+
+  return dom(
+    "select",
+    { value: "", onChange: onChange },
+    dom(
+      "option",
+      { selected: true, disabled: true },
+      label
+    ),
+    rows
+  );
+};
+
+},{"../lib/deku/index.js":6}],11:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -4886,7 +5222,7 @@ request.put = function(url, data, fn){
 
 module.exports = request;
 
-},{"emitter":8,"reduce":9}],8:[function(require,module,exports){
+},{"emitter":12,"reduce":13}],12:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -5052,7 +5388,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],9:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 
 /**
  * Reduce `arr` with `fn`.
@@ -5077,4 +5413,4 @@ module.exports = function(arr, fn, initial){
   
   return curr;
 };
-},{}]},{},[3]);
+},{}]},{},[4]);

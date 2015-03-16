@@ -36,9 +36,8 @@ exports.create = function *() {
  * Delete user
  */
 
-exports.remove = function *() {
-  var load = this.request.body;
-  return User.remove({ name: load.name });
+exports.remove = function *(name) {
+  return User.remove({ name: name });
 };
 
 /**

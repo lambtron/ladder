@@ -44,11 +44,11 @@ Input.prototype.render = function(props, state) {
   return (
     <input
       type='text'
-      name={ name }
-      defaultValue={ defaultValue }
-      placeholder={ placeholder }
-      onChange={ onChange }
-      onInput={ onInput } />
+      name={name}
+      defaultValue={defaultValue}
+      placeholder={placeholder}
+      onChange={onChange}
+      onInput={onInput} />
   );
 };
 

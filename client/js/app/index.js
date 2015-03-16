@@ -27,14 +27,32 @@ export default App;
  */
 
 App.prototype.render = function(props, state) {
+  var showPlayer, showGame = false;
+
   return (
-    <div class='container'>
-      <div class='row'>
-        <List />
+    <div class='' style='font-size: 2em'>
+      <div class='container'>
+        <div class='row list'>
+          <div class='col-xs-12'>
+            <List />
+          </div>
+        </div>
+        <br />
+        <div class='row'>
+          <div class='col-xs-6'>
+            <Button label='NEW PLAYER' onClick={showPlayer = !showPlayer} />
+          </div>
+          <div class='col-xs-6'>
+            <Button label='NEW GAME' onClick={showGame = !showGame} />
+          </div>
+        </div>
       </div>
-      <div class='row'>
-        <Button label='NEW PLAYER' />
-        <Button label='NEW GAME' />
+
+      <div>
+        <Player visible={showPlayer} />
+      </div>
+      <div>
+        <Game visible={showGame} />
       </div>
     </div>
   );

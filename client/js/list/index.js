@@ -5,7 +5,7 @@
  */
 
 import {component,dom} from '../lib/deku/index.js';
-import Item from '../item/index.js';
+import ListItem from '../list-item/index.js';
 
 /**
  * Constants.
@@ -30,7 +30,7 @@ export default List;
  * Get players.
  */
 
-List.prototype.get = function() {
+List.prototype.players = function() {
   var setState = this.setState;
   var url = '/api/list';
 
@@ -55,7 +55,34 @@ List.prototype.get = function() {
 
 List.prototype.beforeMount = function(props, state, prevProps, prevState) {
   console.log('before mount');
-  this.get();
+  this.players();
+};
+
+List.prototype.propsChanged = function(props) {
+  console.log('props changed');
+};
+
+List.prototype.afterMount = function(el, props, state) {
+  console.log('after mount');
+  console.log(props);
+  console.log(state);
+  this.players();
+};
+
+List.prototype.beforeUpdate = function(props, state, nextProps, nextState) {
+  console.log('before update');
+};
+
+List.prototype.afterUpdate = function(props, state, prevProps, prevState) {
+  console.log('after update');
+};
+
+List.prototype.beforeUnmount = function(el, props, state) {
+  console.log('before unmount');
+};
+
+List.prototype.afterUnmount = function(props, state) {
+  console.log('after unmount');
 };
 
 /**
@@ -63,11 +90,7 @@ List.prototype.beforeMount = function(props, state, prevProps, prevState) {
  */
 
 List.prototype.render = function(props, state) {
-  console.log('render');
-  console.log(props);
-  console.log(state);
-
-  var list = props.list;
+  var list = props.list || [];
 
   list = [
     { name: 'BeastLee', rating: 1500 },
@@ -86,14 +109,14 @@ List.prototype.render = function(props, state) {
     .sort(sortByRating)
     .map(function(player) {
       return (
-        <Item player={ player } />
+        <ListItem player={player} />
       );
     });
 
   // Return rows.
   return (
     <div>
-      { rows }
+      {rows}
     </div>
   );
 };

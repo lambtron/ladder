@@ -44,28 +44,34 @@ Player.prototype.create = function(name) {
  */
 
 Player.prototype.render = function(props, state) {
-  var visible = props.visible || false;
+  var self = this;
   var username = '';
-  var node = ();
+  var visible = props.visible || false;
 
   // Get input value.
   function value(value, name) {
     username = value;
   }
 
-  if (visible) {
-    node = (
-      <div>
-        <div>
-          <Input name='player' placeholder='username' onValid={ value } />
-        </div>
-        <div>
-          <Button label='CANCEL' />
-          <Button label='ADD' onClick=this.create(username) />
-        </div>
-      </div>
-    );
+  // Create player.
+  function create() {
+    self.create(username);
   }
 
-  return node;
+  // Cancel.
+  function cancel() {
+    // cancel.
+  }
+
+  return (
+    <div>
+      <div>
+        <Input name='player' placeholder='username' onValid={value} />
+      </div>
+      <div>
+        <Button label='CANCEL' onClick={cancel} />
+        <Button label='ADD' onClick={create} />
+      </div>
+    </div>
+  );
 };
