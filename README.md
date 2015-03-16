@@ -1,6 +1,6 @@
 # Ladder
 
-> Elo ranking web app.
+> Elo rating web app.
 
 ## Installing
 
