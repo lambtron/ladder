@@ -1,15 +1,15 @@
 {
   "name": "ladder",
-  "description": "Elo ranking web app.",
+  "description": "A light-weight Elo rating web app.",
   "version": "0.0.1",
   "author": "Andy Jiang",
-  "main": "bin/server",
+  "main": "server/server",
   "repository": {
     "type": "git",
     "url": "https://github.com/lambtron/ladder"
   },
   "engines": {
-    "node": "^0.11.14",
+    "node": "^0.12.x",
     "npm": "^2.1.x"
   },
   "private": true,
