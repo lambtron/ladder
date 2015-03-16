@@ -65,12 +65,18 @@ Player.prototype.render = function(props, state) {
 
   return (
     <div>
-      <div>
-        <Input name='player' placeholder='username' onValid={value} />
+      <div class='row'>
+        <div class='col-xs-12'>
+          <Input name='player' placeholder='username' onValid={value} />
+        </div>
       </div>
-      <div>
-        <Button label='CANCEL' onClick={cancel} />
-        <Button label='ADD' onClick={create} />
+      <div class='row'>
+        <div class='col-xs-6'>
+          <Button label='CANCEL' onClick={cancel} />
+        </div>
+        <div class='col-xs-6'>
+          <Button label='ADD' onClick={create} />
+        </div>
       </div>
     </div>
   );
