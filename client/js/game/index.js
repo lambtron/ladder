@@ -70,14 +70,18 @@ Game.prototype.render = function(props, state) {
 
   return (
     <div>
-      <span>
-        <SelectList label='WINNER' list={list} onChange={update} />
-      </span>
-      <span>
-        <SelectList label='LOSER' list={list} onChange={update} />
-      </span>
-      <div>
-        <Button label='SUBMIT' onClick={submit} />
+      <div class='row'>
+        <div class='col-xs-6'>
+          <SelectList label='WINNER' list={list} onChange={update} />
+        </div>
+        <div class='col-xs-6'>
+          <SelectList label='LOSER' list={list} onChange={update} />
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-xs-12'>
+          <Button label='SUBMIT' onClick={submit} />
+        </div>
       </div>
     </div>
   );
