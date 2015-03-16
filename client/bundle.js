@@ -3885,11 +3885,20 @@ var List = component().prop("list", { type: "array" });
 module.exports = List;
 
 /**
- * Get players.
+ * Before mount.
  */
 
-List.prototype.players = function () {
-  var setState = this.setState;
+List.prototype.beforeMount = function (props, state, prevProps, prevState) {
+  debugger;
+};
+
+List.prototype.propsChanged = function (props) {
+  debugger;
+};
+
+List.prototype.afterMount = function (el, props, state) {
+  debugger;
+  var setState = this.setState.bind(this);
   var url = "/api/list";
 
   // hack for now.
@@ -3902,40 +3911,20 @@ List.prototype.players = function () {
   // });
 };
 
-/**
- * Before mount.
- */
-
-List.prototype.beforeMount = function (props, state, prevProps, prevState) {
-  console.log("before mount");
-  this.players();
-};
-
-List.prototype.propsChanged = function (props) {
-  console.log("props changed");
-};
-
-List.prototype.afterMount = function (el, props, state) {
-  console.log("after mount");
-  console.log(props);
-  console.log(state);
-  this.players();
-};
-
 List.prototype.beforeUpdate = function (props, state, nextProps, nextState) {
-  console.log("before update");
+  debugger;
 };
 
 List.prototype.afterUpdate = function (props, state, prevProps, prevState) {
-  console.log("after update");
+  debugger;
 };
 
 List.prototype.beforeUnmount = function (el, props, state) {
-  console.log("before unmount");
+  debugger;
 };
 
 List.prototype.afterUnmount = function (props, state) {
-  console.log("after unmount");
+  debugger;
 };
 
 /**
@@ -3943,12 +3932,11 @@ List.prototype.afterUnmount = function (props, state) {
  */
 
 List.prototype.render = function (props, state) {
-  var list = props.list || [];
-
-  list = [{ name: "BeastLee", rating: 1500 }, { name: "DinnerNugget", rating: 1800 }, { name: "Lambtron", rating: 1200 }, { name: "Steven", rating: 1100 }];
+  var list = state.list || [];
 
   // Sort by rating
   function sortByRating(a, b) {
+    debugger;
     return a.rating > b.rating ? -1 : 1;
   }
 
