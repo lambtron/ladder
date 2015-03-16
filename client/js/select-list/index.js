@@ -46,7 +46,7 @@ SelectList.prototype.render = function(props, state) {
     });
 
   return (
-    <select value='' onChange={onChange}>
+    <select value='' onChange={onChange} style='width: 100%'>
       <option selected disabled>
         {label}
       </option>
