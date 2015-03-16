@@ -48,10 +48,10 @@ App.prototype.render = function(props, state) {
         </div>
       </div>
 
-      <div>
+      <div class='container'>
         <Player visible={showPlayer} />
       </div>
-      <div>
+      <div class='container'>
         <Game visible={showGame} />
       </div>
     </div>
