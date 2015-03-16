@@ -27,6 +27,10 @@ $ heroku addons:add mongolab
 $ heroku open
 ```
 
+Or,
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ## Usage
 
 ### API Routes
