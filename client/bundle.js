@@ -23,6 +23,12 @@ var Game = _interopRequire(require("../game/index.js"));
 var List = _interopRequire(require("../list/index.js"));
 
 /**
+ * Constants.
+ */
+
+var request = require("superagent");
+
+/**
  * Define `App`.
  */
 
@@ -35,10 +41,41 @@ var App = component();
 module.exports = App;
 
 /**
+ * After mount.
+ */
+
+App.prototype.afterMount = function (el, props, state) {
+  var setState = this.setState.bind(this);
+  var url = "/api/list";
+
+  // hack for now.
+  // var list = [
+  //   { name: 'BeastLee', rating: 1500 },
+  //   { name: 'DinnerNugget', rating: 1800 },
+  //   { name: 'Lambtron', rating: 1200 },
+  //   { name: 'Steven', rating: 1100 }
+  // ];
+
+  // Sort by rating
+  function sortByRating(a, b) {
+    return a.rating > b.rating ? -1 : 1;
+  }
+
+  // setState({ list: list });
+  request.get(url).end(function (err, res) {
+    var list = res.body || [];
+    list.sort(sortByRating);
+    // do something.
+    setState({ list: res.body });
+  });
+};
+
+/**
  * Render `App`.
  */
 
 App.prototype.render = function (props, state) {
+  var list = state.list || [];
   var showPlayer,
       showGame = false;
 
@@ -54,7 +91,7 @@ App.prototype.render = function (props, state) {
         dom(
           "div",
           { "class": "col-xs-12" },
-          dom(List, null)
+          dom(List, { list: list })
         )
       ),
       dom("br", null),
@@ -81,12 +118,12 @@ App.prototype.render = function (props, state) {
     dom(
       "div",
       { "class": "container" },
-      dom(Game, { visible: showGame })
+      dom(Game, { visible: showGame, list: list })
     )
   );
 };
 
-},{"../button/index.js":2,"../game/index.js":3,"../lib/deku/index.js":6,"../list/index.js":8,"../player/index.js":9}],2:[function(require,module,exports){
+},{"../button/index.js":2,"../game/index.js":3,"../lib/deku/index.js":6,"../list/index.js":8,"../player/index.js":9,"superagent":11}],2:[function(require,module,exports){
 "use strict";
 
 /** @jsx dom */
@@ -99,12 +136,6 @@ var _libDekuIndexJs = require("../lib/deku/index.js");
 
 var component = _libDekuIndexJs.component;
 var dom = _libDekuIndexJs.dom;
-
-/**
- * Constants.
- */
-
-var request = require("superagent");
 
 /**
  * Define `Button`.
@@ -133,7 +164,7 @@ Button.prototype.render = function (props, state) {
   );
 };
 
-},{"../lib/deku/index.js":6,"superagent":11}],3:[function(require,module,exports){
+},{"../lib/deku/index.js":6}],3:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -200,9 +231,6 @@ Game.prototype.render = function (props, state) {
   function submit() {
     self.results(outcome);
   }
-
-  // hack for now.
-  list = [{ name: "BeastLee", rating: 1500, disabled: false }, { name: "DinnerNugget", rating: 1800, disabled: false }, { name: "Lambtron", rating: 1200, disabled: false }, { name: "Steven", rating: 1100, disabled: false }];
 
   return dom(
     "div",
@@ -301,7 +329,9 @@ Input.prototype.render = function (props, state) {
     defaultValue: defaultValue,
     placeholder: placeholder,
     onChange: onChange,
-    onInput: onInput });
+    onInput: onInput,
+    "class": "borderless",
+    style: "width: 100%" });
 };
 
 /**
@@ -3867,12 +3897,6 @@ var dom = _libDekuIndexJs.dom;
 var ListItem = _interopRequire(require("../list-item/index.js"));
 
 /**
- * Constants.
- */
-
-var request = require("superagent");
-
-/**
  * Define `List`.
  */
 
@@ -3885,63 +3909,14 @@ var List = component().prop("list", { type: "array" });
 module.exports = List;
 
 /**
- * Before mount.
- */
-
-List.prototype.beforeMount = function (props, state, prevProps, prevState) {
-  debugger;
-};
-
-List.prototype.propsChanged = function (props) {
-  debugger;
-};
-
-List.prototype.afterMount = function (el, props, state) {
-  debugger;
-  var setState = this.setState.bind(this);
-  var url = "/api/list";
-
-  // hack for now.
-  var list = [{ name: "BeastLee", rating: 1500 }, { name: "DinnerNugget", rating: 1800 }, { name: "Lambtron", rating: 1200 }, { name: "Steven", rating: 1100 }];
-
-  setState({ list: list });
-  // request.get(url).end(function(err, res) {
-  // do something.
-  // setState({ list: res.body });
-  // });
-};
-
-List.prototype.beforeUpdate = function (props, state, nextProps, nextState) {
-  debugger;
-};
-
-List.prototype.afterUpdate = function (props, state, prevProps, prevState) {
-  debugger;
-};
-
-List.prototype.beforeUnmount = function (el, props, state) {
-  debugger;
-};
-
-List.prototype.afterUnmount = function (props, state) {
-  debugger;
-};
-
-/**
  * Render `List`.
  */
 
 List.prototype.render = function (props, state) {
-  var list = state.list || [];
+  var list = props.list || [];
 
-  // Sort by rating
-  function sortByRating(a, b) {
-    debugger;
-    return a.rating > b.rating ? -1 : 1;
-  }
-
-  // Create rows and sort them by rating
-  var rows = list.sort(sortByRating).map(function (player) {
+  // Create rows.
+  var rows = list.map(function (player) {
     return dom(ListItem, { player: player });
   });
 
@@ -3953,7 +3928,7 @@ List.prototype.render = function (props, state) {
   );
 };
 
-},{"../lib/deku/index.js":6,"../list-item/index.js":7,"superagent":11}],9:[function(require,module,exports){
+},{"../lib/deku/index.js":6,"../list-item/index.js":7}],9:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -4100,14 +4075,14 @@ SelectList.prototype.render = function (props, state) {
   var rows = list.map(function (player) {
     return dom(
       "option",
-      { value: player.name, disabled: player.disabled },
+      { value: player.name },
       player.name
     );
   });
 
   return dom(
     "select",
-    { value: "", onChange: onChange, style: "width: 100%" },
+    { value: "", onChange: onChange, "class": "borderless", style: "border: none; width: 100%; -webkit-appearance: none; -moz-appearance: none; appearance: none" },
     dom(
       "option",
       { selected: true, disabled: true },

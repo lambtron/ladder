@@ -48,7 +48,9 @@ Input.prototype.render = function(props, state) {
       defaultValue={defaultValue}
       placeholder={placeholder}
       onChange={onChange}
-      onInput={onInput} />
+      onInput={onInput}
+      class='borderless'
+      style='width: 100%' />
   );
 };
 

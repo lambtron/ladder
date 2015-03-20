@@ -14,11 +14,13 @@ var User = wrap(db.get('user'));
 module.exports = User;
 
 /**
- * Create user.
+ * Upsert user.
  */
 
 User.create = function *(name) {
-  return yield this.insert(newUser(name));
+  var exists = yield this.findOne({ name: name });
+  if (!exists) return yield this.insert(newUser(name));
+  return 'User already exists';
 };
 
 /**

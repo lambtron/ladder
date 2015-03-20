@@ -5,14 +5,14 @@
 
 var render = require('./render');
 var User = require('./user');
-var elo = require('./elo');
+var rank = require('./elo');
 
 /**
  * Render index html page.
  */
 
 exports.index = function *() {
-  this.body = yield render('index');
+  return this.body = yield render('index');
 };
 
 /**
@@ -29,7 +29,7 @@ exports.list = function *() {
 
 exports.create = function *() {
   var load = this.request.body;
-  return yield User.create(load.name);
+  return this.body = yield User.create(load.name);
 };
 
 /**
@@ -37,7 +37,7 @@ exports.create = function *() {
  */
 
 exports.remove = function *(name) {
-  return User.remove({ name: name });
+  return this.body = yield User.remove({ name: name });
 };
 
 /**
@@ -46,5 +46,5 @@ exports.remove = function *(name) {
 
 exports.results = function *() {
   var load = this.request.body;
-  return yield elo.rank(load.winner, load.loser);
+  return this.body = yield rank(load.winner, load.loser);
 };

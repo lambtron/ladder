@@ -7,12 +7,6 @@
 import {component,dom} from '../lib/deku/index.js';
 
 /**
- * Constants.
- */
-
-const request = require('superagent');
-
-/**
  * Define `Button`.
  */
 

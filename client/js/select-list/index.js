@@ -39,14 +39,14 @@ SelectList.prototype.render = function(props, state) {
   var rows = list
     .map(function(player) {
       return (
-        <option value={player.name} disabled={player.disabled}>
+        <option value={player.name}>
           {player.name}
         </option>
       );
     });
 
   return (
-    <select value='' onChange={onChange} style='width: 100%'>
+    <select value='' onChange={onChange} class='borderless' style='border: none; width: 100%; -webkit-appearance: none; -moz-appearance: none; appearance: none'>
       <option selected disabled>
         {label}
       </option>

@@ -60,14 +60,6 @@ Game.prototype.render = function(props, state) {
     self.results(outcome);
   }
 
-  // hack for now.
-  list = [
-    { name: 'BeastLee', rating: 1500, disabled: false },
-    { name: 'DinnerNugget', rating: 1800, disabled: false },
-    { name: 'Lambtron', rating: 1200, disabled: false },
-    { name: 'Steven', rating: 1100, disabled: false }
-  ];
-
   return (
     <div>
       <div class='row'>
