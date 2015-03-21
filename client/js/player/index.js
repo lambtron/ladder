@@ -18,8 +18,7 @@ const request = require('superagent');
  * Define `Player`.
  */
 
-var Player = component()
-  .prop('visible', { type: 'boolean' });
+var Player = component();
 
 /**
  * Expose `Player`.
@@ -46,7 +45,6 @@ Player.prototype.create = function(name) {
 Player.prototype.render = function(props, state) {
   var self = this;
   var username = '';
-  var visible = props.visible || false;
 
   // Get input value.
   function value(value, name) {
@@ -55,6 +53,7 @@ Player.prototype.render = function(props, state) {
 
   // Create player.
   function create() {
+    if (username.length === 0) return console.log('Username must not be blank');
     self.create(username);
   }
 
@@ -65,18 +64,11 @@ Player.prototype.render = function(props, state) {
 
   return (
     <div>
-      <div class='row'>
-        <div class='col-xs-12'>
-          <Input name='player' placeholder='username' onValid={value} />
-        </div>
+      <div class='col-xs-9'>
+        <Input name='player' placeholder='new username here' onValid={value} />
       </div>
-      <div class='row'>
-        <div class='col-xs-6'>
-          <Button label='CANCEL' onClick={cancel} />
-        </div>
-        <div class='col-xs-6'>
-          <Button label='ADD' onClick={create} />
-        </div>
+      <div class='col-xs-3'>
+        <span class='glyphicon glyphicon-plus pull-right pointer' onClick={create}></span>
       </div>
     </div>
   );
