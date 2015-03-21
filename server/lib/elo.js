@@ -20,7 +20,9 @@ module.exports = function *(w, l) {
   var expectedScoreWinner = elo.getExpected(winner.rating, loser.rating);
   var expectedScoreLoser = elo.getExpected(loser.rating, winner.rating);
   winner.rating = elo.updateRating(expectedScoreWinner, 1, winner.rating);
+  winner.games++;
   loser.rating = elo.updateRating(expectedScoreLoser, 0, loser.rating);
+  loser.games++;
   User.update({ name: winner.name }, winner);
   User.update({ name: loser.name }, loser);
   return;

@@ -37,7 +37,7 @@ app.use(route.get('/', routes.index));
 app.use(route.get('/api/list', routes.list));
 app.use(route.post('/api/create', routes.create));
 app.use(route.post('/api/results', routes.results));
-app.use(route.post('/api/remove/:name', routes.remove));
+app.use(route.get('/api/remove/:name', routes.remove));
 
 /**
  * Listen on PORT.
