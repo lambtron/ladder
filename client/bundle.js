@@ -74,7 +74,7 @@ App.prototype.render = function (props, state) {
       { "class": "container" },
       dom(
         "div",
-        { "class": "row" },
+        { "class": "row", style: "margin-top: 10px" },
         dom(
           "div",
           { "class": "col-xs-12" },
@@ -85,10 +85,10 @@ App.prototype.render = function (props, state) {
     dom(
       "footer",
       { style: "position: absolute; bottom: 0px; width: 100%" },
-      dom("hr", null),
       dom(
         "div",
         { "class": "container" },
+        dom("hr", null),
         dom(
           "div",
           { "class": "row" },
