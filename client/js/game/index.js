@@ -19,7 +19,6 @@ const request = require('superagent');
  */
 
 var Game = component()
-  .prop('visible', { type: 'boolean' })
   .prop('list', { type: 'array' });
 
 /**
@@ -44,36 +43,31 @@ Game.prototype.results = function(outcome) {
  */
 
 Game.prototype.render = function(props, state) {
-  var visible = props.visible;
   var list = props.list;
-  var outcome = {};
+  var outcome = { winner: 'WINNER', loser: 'LOSER' };
   var self = this;
 
   // Update selection.
   function update(username, label) {
     outcome[label.toLowerCase()] = username;
-    // find username in list and disable it.
   }
 
   // Submit results.
   function submit() {
+    if (outcome.winner === 'WINNER' || outcome.loser === 'LOSER') return console.log('Must select actual player');
     self.results(outcome);
   }
 
   return (
     <div>
-      <div class='row'>
-        <div class='col-xs-6'>
-          <SelectList label='WINNER' list={list} onChange={update} />
-        </div>
-        <div class='col-xs-6'>
-          <SelectList label='LOSER' list={list} onChange={update} />
-        </div>
+      <div class='col-xs-5'>
+        <SelectList label='WINNER' list={list} onChange={update} />
       </div>
-      <div class='row'>
-        <div class='col-xs-12'>
-          <Button label='SUBMIT' onClick={submit} />
-        </div>
+      <div class='col-xs-5'>
+        <SelectList label='LOSER' list={list} onChange={update} />
+      </div>
+      <div class='col-xs-2'>
+        <span class='glyphicon glyphicon-plus pull-right pointer' onClick={submit}></span>
       </div>
     </div>
   );
