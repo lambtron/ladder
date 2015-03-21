@@ -48,25 +48,14 @@ App.prototype.afterMount = function (el, props, state) {
   var setState = this.setState.bind(this);
   var url = "/api/list";
 
-  // hack for now.
-  // var list = [
-  //   { name: 'BeastLee', rating: 1500 },
-  //   { name: 'DinnerNugget', rating: 1800 },
-  //   { name: 'Lambtron', rating: 1200 },
-  //   { name: 'Steven', rating: 1100 }
-  // ];
-
   // Sort by rating
   function sortByRating(a, b) {
     return a.rating > b.rating ? -1 : 1;
   }
 
-  // setState({ list: list });
   request.get(url).end(function (err, res) {
     var list = res.body || [];
-    list.sort(sortByRating);
-    // do something.
-    setState({ list: res.body });
+    setState({ list: list.sort(sortByRating) });
   });
 };
 
@@ -76,49 +65,41 @@ App.prototype.afterMount = function (el, props, state) {
 
 App.prototype.render = function (props, state) {
   var list = state.list || [];
-  var showPlayer,
-      showGame = false;
 
   return dom(
     "div",
-    { "class": "", style: "font-size: 2em" },
+    { style: "font-size: 2em" },
     dom(
       "div",
       { "class": "container" },
-      dom(
-        "div",
-        { "class": "row list" },
-        dom(
-          "div",
-          { "class": "col-xs-12" },
-          dom(List, { list: list })
-        )
-      ),
-      dom("br", null),
       dom(
         "div",
         { "class": "row" },
         dom(
           "div",
-          { "class": "col-xs-6" },
-          dom(Button, { label: "NEW PLAYER", onClick: showPlayer = !showPlayer })
-        ),
-        dom(
-          "div",
-          { "class": "col-xs-6" },
-          dom(Button, { label: "NEW GAME", onClick: showGame = !showGame })
+          { "class": "col-xs-12" },
+          dom(List, { list: list })
         )
       )
     ),
     dom(
-      "div",
-      { "class": "container" },
-      dom(Player, { visible: showPlayer })
-    ),
-    dom(
-      "div",
-      { "class": "container" },
-      dom(Game, { visible: showGame, list: list })
+      "footer",
+      { style: "position: absolute; bottom: 0px; width: 100%" },
+      dom("hr", null),
+      dom(
+        "div",
+        { "class": "container" },
+        dom(
+          "div",
+          { "class": "row" },
+          dom(Player, { visible: true })
+        ),
+        dom(
+          "div",
+          { "class": "row" },
+          dom(Game, { list: list, visible: true })
+        )
+      )
     )
   );
 };
@@ -194,7 +175,7 @@ var request = require("superagent");
  * Define `Game`.
  */
 
-var Game = component().prop("visible", { type: "boolean" }).prop("list", { type: "array" });
+var Game = component().prop("list", { type: "array" });
 
 /**
  * Expose `Game`.
@@ -216,20 +197,20 @@ Game.prototype.results = function (outcome) {
  */
 
 Game.prototype.render = function (props, state) {
-  var visible = props.visible;
   var list = props.list;
-  var outcome = {};
+  var outcome = { winner: "WINNER", loser: "LOSER" };
   var self = this;
 
   // Update selection.
   function update(username, label) {
     outcome[label.toLowerCase()] = username;
-    // find username in list and disable it.
   }
 
   // Submit results.
   function submit() {
-    self.results(outcome);
+    if (outcome.winner === "WINNER" || outcome.loser === "LOSER") {
+      return console.log("Must select actual player");
+    }self.results(outcome);
   }
 
   return dom(
@@ -237,26 +218,18 @@ Game.prototype.render = function (props, state) {
     null,
     dom(
       "div",
-      { "class": "row" },
-      dom(
-        "div",
-        { "class": "col-xs-6" },
-        dom(SelectList, { label: "WINNER", list: list, onChange: update })
-      ),
-      dom(
-        "div",
-        { "class": "col-xs-6" },
-        dom(SelectList, { label: "LOSER", list: list, onChange: update })
-      )
+      { "class": "col-xs-5" },
+      dom(SelectList, { label: "WINNER", list: list, onChange: update })
     ),
     dom(
       "div",
-      { "class": "row" },
-      dom(
-        "div",
-        { "class": "col-xs-12" },
-        dom(Button, { label: "SUBMIT", onClick: submit })
-      )
+      { "class": "col-xs-5" },
+      dom(SelectList, { label: "LOSER", list: list, onChange: update })
+    ),
+    dom(
+      "div",
+      { "class": "col-xs-2" },
+      dom("span", { "class": "glyphicon glyphicon-plus pull-right pointer", onClick: submit })
     )
   );
 };
@@ -3958,7 +3931,7 @@ var request = require("superagent");
  * Define `Player`.
  */
 
-var Player = component().prop("visible", { type: "boolean" });
+var Player = component();
 
 /**
  * Expose `Player`.
@@ -3982,7 +3955,6 @@ Player.prototype.create = function (name) {
 Player.prototype.render = function (props, state) {
   var self = this;
   var username = "";
-  var visible = props.visible || false;
 
   // Get input value.
   function value(value, name) {
@@ -3991,7 +3963,9 @@ Player.prototype.render = function (props, state) {
 
   // Create player.
   function create() {
-    self.create(username);
+    if (username.length === 0) {
+      return console.log("Username must not be blank");
+    }self.create(username);
   }
 
   // Cancel.
@@ -4002,26 +3976,13 @@ Player.prototype.render = function (props, state) {
     null,
     dom(
       "div",
-      { "class": "row" },
-      dom(
-        "div",
-        { "class": "col-xs-12" },
-        dom(Input, { name: "player", placeholder: "username", onValid: value })
-      )
+      { "class": "col-xs-9" },
+      dom(Input, { name: "player", placeholder: "new username here", onValid: value })
     ),
     dom(
       "div",
-      { "class": "row" },
-      dom(
-        "div",
-        { "class": "col-xs-6" },
-        dom(Button, { label: "CANCEL", onClick: cancel })
-      ),
-      dom(
-        "div",
-        { "class": "col-xs-6" },
-        dom(Button, { label: "ADD", onClick: create })
-      )
+      { "class": "col-xs-3" },
+      dom("span", { "class": "glyphicon glyphicon-plus pull-right pointer", onClick: create })
     )
   );
 };
@@ -4085,7 +4046,7 @@ SelectList.prototype.render = function (props, state) {
     { value: "", onChange: onChange, "class": "borderless", style: "border: none; width: 100%; -webkit-appearance: none; -moz-appearance: none; appearance: none" },
     dom(
       "option",
-      { selected: true, disabled: true },
+      { selected: true },
       label
     ),
     rows
