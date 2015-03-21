@@ -30,9 +30,9 @@ export default Player;
  * Create player.
  */
 
-Player.prototype.create = function(name) {
+Player.prototype.create = function(player) {
   var url = '/api/create';
-  request.post(url).send({ name: name }).end(function(err, res) {
+  request.post(url).send({ player }).end(function(err, res) {
     // do something.
     // setState({ list: res.body });
   });
@@ -44,30 +44,29 @@ Player.prototype.create = function(name) {
 
 Player.prototype.render = function(props, state) {
   var self = this;
-  var username = '';
+  var player = { name: '', gif: '' };
 
   // Get input value.
   function value(value, name) {
-    username = value;
+    if (name === 'player') player.name = value;
+    if (name === 'gif') player.gif = value;
   }
 
   // Create player.
   function create() {
-    if (username.length === 0) return console.log('Username must not be blank');
-    self.create(username);
-  }
-
-  // Cancel.
-  function cancel() {
-    // cancel.
+    if (player.name.length === 0) return console.log('Username must not be blank');
+    self.create(player);
   }
 
   return (
     <div>
-      <div class='col-xs-9'>
+      <div class='col-xs-5'>
         <Input name='player' placeholder='new username here' onValid={value} />
       </div>
-      <div class='col-xs-3'>
+      <div class='col-xs-5'>
+        <Input name='gif' placeholder='your gif' onValid={value} />
+      </div>
+      <div class='col-xs-2'>
         <span class='glyphicon glyphicon-plus pull-right pointer' onClick={create}></span>
       </div>
     </div>

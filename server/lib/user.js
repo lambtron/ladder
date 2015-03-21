@@ -17,9 +17,9 @@ module.exports = User;
  * Upsert user.
  */
 
-User.create = function *(name) {
-  var exists = yield this.findOne({ name: name });
-  if (!exists) return yield this.insert(newUser(name));
+User.create = function *(user) {
+  var exists = yield this.findOne({ name: user.name });
+  if (!exists) return yield this.insert(newUser(user));
   return 'User already exists';
 };
 
@@ -27,10 +27,12 @@ User.create = function *(name) {
  * Return new user object.
  */
 
-function newUser(name) {
+function newUser(user) {
   return {
-    name: name || '',
+    name: user.name || '',
+    gif: user.gif || '',
     rating: 1500,
+    games: 0,
     createdAt: Date.now()
   };
 }

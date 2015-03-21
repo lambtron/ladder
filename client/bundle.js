@@ -84,7 +84,7 @@ App.prototype.render = function (props, state) {
     ),
     dom(
       "footer",
-      { style: "position: absolute; bottom: 0px; width: 100%" },
+      { style: "position: absolute; bottom: 0px; width: 100%; margin-bottom: 20px;" },
       dom(
         "div",
         { "class": "container" },
@@ -3829,18 +3829,32 @@ var Item = component().prop("player", { type: "object" });
 module.exports = Item;
 
 /**
+ * Get gif.
+ */
+
+Item.prototype.gif = function () {
+  return "http://media.giphy.com/media/wvU4jl82C9cis/giphy.gif";
+};
+
+/**
  * Render `Item`.
  */
 
 Item.prototype.render = function (props, state) {
   var player = props.player;
+  player.gif = player.gif || this.gif();
 
   return dom(
     "div",
-    null,
+    { style: "margin: 10px 0px 10px 0px" },
     dom(
       "span",
       null,
+      dom("img", { src: player.gif, style: "margin-right: 10px; width: 26px; height: 26px; -moz-border-radius: 13px; border-radius: 13px;" })
+    ),
+    dom(
+      "span",
+      { style: "vertical-align: middle" },
       player.name
     ),
     dom(
@@ -3943,9 +3957,9 @@ module.exports = Player;
  * Create player.
  */
 
-Player.prototype.create = function (name) {
+Player.prototype.create = function (player) {
   var url = "/api/create";
-  request.post(url).send({ name: name }).end(function (err, res) {});
+  request.post(url).send({ player: player }).end(function (err, res) {});
 };
 
 /**
@@ -3954,34 +3968,37 @@ Player.prototype.create = function (name) {
 
 Player.prototype.render = function (props, state) {
   var self = this;
-  var username = "";
+  var player = { name: "", gif: "" };
 
   // Get input value.
   function value(value, name) {
-    username = value;
+    if (name === "player") player.name = value;
+    if (name === "gif") player.gif = value;
   }
 
   // Create player.
   function create() {
-    if (username.length === 0) {
+    if (player.name.length === 0) {
       return console.log("Username must not be blank");
-    }self.create(username);
+    }self.create(player);
   }
-
-  // Cancel.
-  function cancel() {}
 
   return dom(
     "div",
     null,
     dom(
       "div",
-      { "class": "col-xs-9" },
+      { "class": "col-xs-5" },
       dom(Input, { name: "player", placeholder: "new username here", onValid: value })
     ),
     dom(
       "div",
-      { "class": "col-xs-3" },
+      { "class": "col-xs-5" },
+      dom(Input, { name: "gif", placeholder: "your gif", onValid: value })
+    ),
+    dom(
+      "div",
+      { "class": "col-xs-2" },
       dom("span", { "class": "glyphicon glyphicon-plus pull-right pointer", onClick: create })
     )
   );
@@ -3989,8 +4006,6 @@ Player.prototype.render = function (props, state) {
 
 // do something.
 // setState({ list: res.body });
-
-// cancel.
 
 },{"../button/index.js":2,"../input/index.js":5,"../lib/deku/index.js":6,"superagent":11}],10:[function(require,module,exports){
 "use strict";

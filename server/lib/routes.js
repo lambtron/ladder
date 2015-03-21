@@ -29,7 +29,7 @@ exports.list = function *() {
 
 exports.create = function *() {
   var load = this.request.body;
-  return this.body = yield User.create(load.name);
+  return this.body = yield User.create(load.player);
 };
 
 /**

@@ -63,7 +63,7 @@ App.prototype.render = function(props, state) {
           </div>
         </div>
       </div>
-      <footer style='position: absolute; bottom: 0px; width: 100%'>
+      <footer style='position: absolute; bottom: 0px; width: 100%; margin-bottom: 20px;'>
         <div class='container'>
           <hr />
           <div class='row'>
