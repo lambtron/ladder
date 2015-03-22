@@ -43,11 +43,17 @@ Get the list of all players in the database. This is a sample response:
 [
   {
     name: 'BeastLee',
-    rating: 1500
+    rating: 1500,
+    createdAt: 'Sun Mar 22 2015 13:49:28 GMT-0700 (PDT)',
+    gif: 'http://media.giphy.com/media/I5xVnGJRHZZf2/giphy.gif',
+    games: 1
   },
   {
     name: 'DinnerNugget',
-    rating: 1800
+    rating: 1800,
+    createdAt: 'Sun Mar 22 2015 13:49:28 GMT-0700 (PDT)',
+    gif: 'http://media.giphy.com/media/I5xVnGJRHZZf2/giphy.gif',
+    games: 2
   }
 ]
 ```
