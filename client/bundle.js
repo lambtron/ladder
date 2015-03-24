@@ -189,7 +189,9 @@ module.exports = Game;
 
 Game.prototype.results = function (outcome) {
   var url = "/api/results";
-  request.post(url).send(outcome).end(function (err, res) {});
+  request.post(url).send(outcome).end(function (err, res) {
+    window.location.reload();
+  });
 };
 
 /**
@@ -233,8 +235,6 @@ Game.prototype.render = function (props, state) {
     )
   );
 };
-
-// do something.
 
 },{"../button/index.js":2,"../lib/deku/index.js":6,"../select-list/index.js":10,"superagent":11}],4:[function(require,module,exports){
 "use strict";
@@ -3959,7 +3959,9 @@ module.exports = Player;
 
 Player.prototype.create = function (player) {
   var url = "/api/create";
-  request.post(url).send({ player: player }).end(function (err, res) {});
+  request.post(url).send({ player: player }).end(function (err, res) {
+    window.location.reload();
+  });
 };
 
 /**
@@ -4003,9 +4005,6 @@ Player.prototype.render = function (props, state) {
     )
   );
 };
-
-// do something.
-// setState({ list: res.body });
 
 },{"../button/index.js":2,"../input/index.js":5,"../lib/deku/index.js":6,"superagent":11}],10:[function(require,module,exports){
 "use strict";

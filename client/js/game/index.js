@@ -34,7 +34,7 @@ export default Game;
 Game.prototype.results = function(outcome) {
   var url = '/api/results';
   request.post(url).send(outcome).end(function(err, res) {
-    // do something.
+    window.location.reload();
   });
 };
 

@@ -33,8 +33,7 @@ export default Player;
 Player.prototype.create = function(player) {
   var url = '/api/create';
   request.post(url).send({ player }).end(function(err, res) {
-    // do something.
-    // setState({ list: res.body });
+    window.location.reload();
   });
 };
 
