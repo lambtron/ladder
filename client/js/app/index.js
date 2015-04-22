@@ -55,18 +55,17 @@ App.prototype.render = function(props, state) {
   var list = state.list || [];
 
   return (
-    <div style='font-size: 2em'>
-      <div class='container'>
+    <div style='font-size: 1.2em'>
+      <div class='container' style='padding-bottom: 150px;'>
         <div class='row' style='margin-top: 10px'>
           <div class='col-xs-12'>
             <List list={list} />
           </div>
         </div>
       </div>
-      <footer style='position: absolute; bottom: 0px; width: 100%; margin-bottom: 20px;'>
+      <footer style='position: fixed; bottom: 0px; width: 100%; padding: 10px; background-color: white; border-top: 1px solid #efefef;'>
         <div class='container'>
-          <hr />
-          <div class='row'>
+          <div class='row' style='margin-bottom: 15px;'>
             <Player visible={true} />
           </div>
           <div class='row'>
