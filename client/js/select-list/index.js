@@ -46,7 +46,7 @@ SelectList.prototype.render = function(props, state) {
     });
 
   return (
-    <select value='' onChange={onChange} class='borderless' style='border: none; width: 100%; -webkit-appearance: none; -moz-appearance: none; appearance: none'>
+    <select value='' onChange={onChange} class='borderless' style='width: 100%;'>
       <option selected>
         {label}
       </option>

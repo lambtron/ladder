@@ -60,7 +60,7 @@ Player.prototype.render = function(props, state) {
   return (
     <div>
       <div class='col-xs-5'>
-        <Input name='player' placeholder='new username here' onValid={value} />
+        <Input name='player' placeholder='new username' onValid={value} />
       </div>
       <div class='col-xs-5'>
         <Input name='gif' placeholder='your gif' onValid={value} />
