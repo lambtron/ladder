@@ -56,7 +56,7 @@ App.prototype.render = function(props, state) {
 
   return (
     <div style='font-size: 1.2em'>
-      <div class='container' style='position: fixed; width: 100%;'>
+      <div class='container' style='padding-bottom: 150px;'>
         <div class='row' style='margin-top: 10px'>
           <div class='col-xs-12'>
             <List list={list} />
