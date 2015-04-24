@@ -36,6 +36,10 @@ server: node_modules
 build: node_modules
 	browserify client/js/index.js -t babelify --outfile client/bundle.js
 
+# Push to slack.
+slack: node_modules
+	@node --harmony server/slack
+
 #
 # Targets.
 #
