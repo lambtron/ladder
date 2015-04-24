@@ -20,8 +20,8 @@ co(main());
  */
 
 function *main() {
-  var ladder = yield User.find({}, { limit: 5 });
-  ladder = ladder.sort(sortByRating);
+  var ladder = yield User.find({});
+  ladder = ladder.sort(sortByRating).slice(0, 5);
   post(ladder);
 }
 
