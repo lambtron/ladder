@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var post = require('./util').post;
+var Game = require('../lib/game');
+var fmt = require('../lib/fmt');
+var moment = require('moment');
+var co = require('co');
+
+/**
+ * Run the program.
+ */
+
+co(main());
+
+/**
+ * define Main function.
+ */
+
+function *main() {
+  var anHourAgo = parseInt(moment().subtract(1, 'hour').format('x'));
+  var activities = yield Game.find({createdAt: { $gte: anHourAgo }});
+  if (activities.length > 0) yield post(fmtActivity(activities));
+}
+
+/**
+ * Format activity to how slack wants it.
+ */
+
+function fmtActivity(activities) {
+  var text = '';
+  for (var i = 0; i < activities.length; i++) {
+    var game = activities[i];
+    text += fmt('%s (+%d) defeats %s (%d)\n', game.winner, game.winnerNewElo - game.winnerOldElo, game.loser, game.loserNewElo - game.loserOldElo);
+  }
+  return JSON.stringify({ text: text });
+}

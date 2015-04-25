@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var post = require('./util').post;
+var User = require('../lib/user');
+var fmt = require('../lib/fmt');
+var co = require('co');
+
+/**
+ * Run the program.
+ */
+
+co(main());
+
+/**
+ * define Main function.
+ */
+
+function *main() {
+  var ranking = yield User.find({});
+  ranking = ranking.sort(sortByRating).slice(0, 5);
+  return yield post(fmtRanking(ranking));
+}
+
+/**
+ * Format ranking to how slack wants it.
+ */
+
+function fmtRanking(ladder) {
+  var text = '';
+  for (var i = 0; i < ladder.length; i++) {
+    var p = ladder[i];
+    text += fmt('%d. %s, %s, %s games\n', i + 1, p.name, p.rating, p.games);
+  }
+  text += '\n<http://segment-ladder.herokuapp.com|More info>';
+  return JSON.stringify({ text: text });
+}
+
+/**
+ * Sort by rating.
+ */
+
+function sortByRating(a, b) {
+  return a.rating > b.rating ? -1 : 1;
+}
