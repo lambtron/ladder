@@ -23,6 +23,7 @@
     "koa-bodyparser": "^1.4.1",
     "koa-route": "^2.2.0",
     "koa-static": "^1.4.9",
+    "moment": "^2.10.2",
     "monk": "^1.0.0",
     "superagent": "^1.1.0",
     "swig": "^1.4.2",
