@@ -47,7 +47,7 @@ function slack(ladder) {
   var text = '';
   for (var i = 0; i < ladder.length; i++) {
     var p = ladder[i];
-    text += fmt('%d. %s, %s, %s games\n', i, p.name, p.rating, p.games);
+    text += fmt('%d. %s, %s, %s games\n', i + 1, p.name, p.rating, p.games);
   }
   return JSON.stringify({ text: text });
 }
