@@ -36,14 +36,6 @@ server: node_modules
 build: node_modules
 	browserify client/js/index.js -t babelify --outfile client/bundle.js
 
-# Push to slack-ranking.
-slack-ranking: node_modules
-	@node --harmony server/slack/ranking
-
-# Push to slack-activities.
-slack-activities: node_modules
-	@node --harmony server/slack/activities
-
 #
 # Targets.
 #
