@@ -67,7 +67,7 @@ Game.prototype.render = function(props, state) {
         <SelectList label='LOSER' list={list} onChange={update} />
       </div>
       <div class='col-xs-2'>
-        <span class='glyphicon glyphicon-plus pull-right pointer' onClick={submit}></span>
+        <span class='btn btn-success' onClick={submit} style='width: 100%'>ADD</span>
       </div>
     </div>
   );
