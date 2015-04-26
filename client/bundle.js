@@ -230,7 +230,11 @@ Game.prototype.render = function (props, state) {
     dom(
       "div",
       { "class": "col-xs-2" },
-      dom("span", { "class": "glyphicon glyphicon-plus pull-right pointer", onClick: submit })
+      dom(
+        "span",
+        { "class": "btn btn-success", onClick: submit, style: "width: 100%" },
+        "ADD"
+      )
     )
   );
 };
@@ -4000,7 +4004,11 @@ Player.prototype.render = function (props, state) {
     dom(
       "div",
       { "class": "col-xs-2" },
-      dom("span", { "class": "glyphicon glyphicon-plus pull-right pointer", onClick: create })
+      dom(
+        "span",
+        { "class": "btn btn-success", onClick: create, style: "width: 100%" },
+        "ADD"
+      )
     )
   );
 };
