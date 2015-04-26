@@ -32,6 +32,7 @@ module.exports = function *(w, l) {
   User.update({ name: winner.name }, winner);
   User.update({ name: loser.name }, loser);
   yield Game.create(game);
+  yield Slack.postGame(game);
   return;
 };
 
