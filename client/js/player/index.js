@@ -66,7 +66,7 @@ Player.prototype.render = function(props, state) {
         <Input name='gif' placeholder='your gif' onValid={value} />
       </div>
       <div class='col-xs-2'>
-        <span class='glyphicon glyphicon-plus pull-right pointer' onClick={create}></span>
+        <span class='btn btn-success' onClick={create} style='width: 100%'>ADD</span>
       </div>
     </div>
   );
