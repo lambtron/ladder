@@ -32,7 +32,7 @@ export default Game;
  */
 
 Game.prototype.results = function(outcome) {
-  var url = '/api/results';
+  var url = '/api/game';
   request.post(url).send(outcome).end(function(err, res) {
     window.location.reload();
   });

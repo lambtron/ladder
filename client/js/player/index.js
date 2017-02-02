@@ -31,7 +31,7 @@ export default Player;
  */
 
 Player.prototype.create = function(player) {
-  var url = '/api/create';
+  var url = '/api/user';
   request.post(url).send({ player }).end(function(err, res) {
     window.location.reload();
   });
