@@ -28,3 +28,5 @@ node_modules
 .lock-wscript
 
 .twgit
+.idea
+.twgit_features_subject

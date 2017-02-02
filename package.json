@@ -14,6 +14,7 @@
   },
   "private": true,
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "co": "^4.5.2",
     "co-monk": "^1.0.0",
     "co-views": "^0.2.0",
@@ -30,6 +31,7 @@
     "thunkify-wrap": "^1.0.4"
   },
   "devDependencies": {
-    "babelify": "^5.0.4"
+    "babelify": "^5.0.4",
+    "nodemon": "^1.11.0"
   }
 }

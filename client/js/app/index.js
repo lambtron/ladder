@@ -34,7 +34,7 @@ export default App;
 
 App.prototype.afterMount = function(el, props, state) {
   var setState = this.setState.bind(this);
-  var url = '/api/list';
+  var url = '/api/user';
 
   // Sort by rating
   function sortByRating(a, b) {
