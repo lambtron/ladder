@@ -34,7 +34,7 @@ server: node_modules
 
 # Build client.
 build: node_modules
-	browserify client/js/index.js -t babelify --outfile client/bundle.js
+	browserify client-react/client.js -t [ babelify --plugins [ transform-object-rest-spread ] ]--outfile client-react/static/bundle.js
 
 #
 # Targets.
