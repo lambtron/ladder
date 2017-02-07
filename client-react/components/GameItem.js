@@ -14,7 +14,7 @@ export default class GameItem extends React.Component {
         <span style={{"verticalAlign": "middle", "color": "green", "fontWeight": "bold"}}
               className="col-xs-2 col-xs-offset-2">
           {game.winner}<br/>
-          {game.winnerDiffElo}
+          +{game.winnerDiffElo}
         </span>
         <span className="col-xs-3">
           Vs

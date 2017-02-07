@@ -17,7 +17,7 @@ export const fetchGames = () => {
         loser,
         winnerNewElo,
         winnerOldElo,
-        winnerDiffElo: '+' + (winnerNewElo - winnerOldElo),
+        winnerDiffElo: winnerNewElo - winnerOldElo,
         loserNewElo,
         loserOldElo,
         loserDiffElo: loserNewElo - loserOldElo,
