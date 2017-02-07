@@ -15,6 +15,16 @@ exports.index = function *() {
   return this.body = yield render('index');
 };
 
+exports.connect = function *() {
+  var load = this.request.body,
+    user = yield User.findOne({name: load.username, password: load.password});
+
+  if (user) {
+    return this.body = {logged: true, admin: user.admin, name: user.name}
+  }
+  return this.throw('Unknown user', 403);
+};
+
 /**
  * User routes
  */
@@ -55,7 +65,7 @@ exports.game = {
    */
 
   list: function *() {
-    return this.body = yield Game.find({}, {sort:{createdAt:-1}});
+    return this.body = yield Game.find({}, {sort: {createdAt: -1}});
   },
 
   /**
@@ -64,7 +74,7 @@ exports.game = {
 
   fetch: function *(id) {
     var game = yield Game.findById(id);
-    if(!game) throw this.throw('cannot find that game', 404);
+    if (!game) throw this.throw('cannot find that game', 404);
     return this.body = game;
   },
 
@@ -84,10 +94,10 @@ exports.game = {
   delete: function *(id) {
     var res = yield Game.delete(id);
 
-    if(res instanceof TypeError) {
+    if (res instanceof TypeError) {
       console.log('throw 400');
       return this.throw(res.message, 400);
-    } else if(res instanceof URIError) {
+    } else if (res instanceof URIError) {
       console.log('throw 404');
       return this.throw(res.message, 404);
     }

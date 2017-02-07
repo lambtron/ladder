@@ -4,9 +4,10 @@
 'use strict';
 
 import * as types from '../constants/actionTypes';
+import init from './initialState';
 
 // Handles user related actions
-export default function (state = [], action) {
+export default function (state = init.users, action) {
   switch (action.type) {
     case types.FETCH_USERS_SUCCESS:
       return [...state, action.users];

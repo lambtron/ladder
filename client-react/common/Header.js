@@ -11,27 +11,39 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {drawerToggleAction} from '../actions/uiActions';
+import {drawerToggleAction, modalLoginToggleAction} from '../actions/uiActions';
+import {logoutAction} from '../actions/profileActions';
 
 export class Header extends React.Component {
   constructor(props) {
     super(props);
 
     // This binding is necessary to make `this` work in the callback
+    this.handleLogout = this.handleLogout.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleModalLoginToggle = this.handleModalLoginToggle.bind(this);
   }
 
   handleToggle() {
     this.props.dispatch(drawerToggleAction());
   }
 
+  handleModalLoginToggle() {
+    this.props.dispatch(modalLoginToggleAction());
+  }
+
+  handleLogout() {
+    this.props.dispatch(logoutAction());
+  }
+
   render() {
-    let {drawer,dispatch, ...x} = this.props;
+    let {drawer,dispatch, logged, ...x} = this.props;
     return (
       <AppBar
-        title="Title"
+        title="Ladder"
         onLeftIconButtonTouchTap={this.handleToggle}
-        iconElementRight={this.props.logged ? <IconMenu
+        onRightIconButtonTouchTap={this.handleModalLoginToggle}
+        iconElementRight={logged ? <IconMenu
             {...x}
             iconButtonElement={
               <IconButton {...x} ><MoreVertIcon /></IconButton>
@@ -39,14 +51,15 @@ export class Header extends React.Component {
             targetOrigin={{horizontal: 'right', vertical: 'top'}}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           >
-            <MenuItem primaryText="Sign out"/>
+            <MenuItem onTouchTap={this.handleLogout} primaryText="Sign out"/>
           </IconMenu> : <FlatButton {...x} label="Login"/>}
       />
     );
   }
 }
 
-const mapStateToProps = ({ users }) => ({
+const mapStateToProps = ({ profile }) => ({
+  logged: profile ? profile.logged : false
 });
 
 export default connect(mapStateToProps)(Header);

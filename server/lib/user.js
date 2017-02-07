@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -18,7 +17,7 @@ module.exports = User;
  */
 
 User.create = function *(user) {
-  var exists = yield this.findOne({ name: user.name });
+  var exists = yield this.findOne({name: user.name});
   if (!exists) return yield this.insert(newUser(user));
   return 'User already exists';
 };
@@ -31,6 +30,8 @@ function newUser(user) {
   return {
     name: user.name || '',
     gif: user.gif || '',
+    password: 'password',
+    admin: user.admin || false,
     rating: 1500,
     games: 0,
     createdAt: Date.now()
