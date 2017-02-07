@@ -4,27 +4,21 @@
 'use strict';
 
 import React from 'react';
+import {Card, CardTitle, CardHeader, CardText} from 'material-ui/Card';
 
 export default class GameItem extends React.Component {
   render() {
     var game = this.props.game;
 
     return (
-      <div style={{textAlign: "center"}} className="row">
-        <span style={{"verticalAlign": "middle", "color": "green", "fontWeight": "bold"}}
-              className="col-xs-2 col-xs-offset-2">
-          {game.winner}<br/>
-          +{game.winnerDiffElo}
-        </span>
-        <span className="col-xs-3">
-          Vs
-        </span>
-        <span style={{"verticalAlign": "middle", color: "red"}}
-              className="col-xs-2">
-          {game.loser}<br/>
-          {game.loserDiffElo}
-        </span>
-      </div>
+      <Card>
+        <CardTitle title={game.winner + ' Won'} subtitle={'against ' + game.loser} actAsExpander={true}/>
+        <CardText expandable={true}>
+          {game.winner} : <span style={{"verticalAlign": "middle", "color": "green", "fontWeight": "bold"}}>+{game.winnerDiffElo}</span>
+          <br/>
+          {game.loser} : <span style={{"verticalAlign": "middle", "color": "red", "fontWeight": "bold"}}>{game.loserDiffElo}</span>
+        </CardText>
+      </Card>
     );
   }
 }
