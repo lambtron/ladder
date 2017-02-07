@@ -10,7 +10,7 @@ import * as types from '../constants/actionTypes';
 // Responsible for searching media library, making calls to the API
 // and instructing the redux-saga middle ware on the next line of action,
 // for success or failure operation.
-export function* fetGamesSaga({}) {
+export function* fetchGamesSaga({}) {
   try {
     const games = yield call(fetchGames);
     yield put({ type: types.FETCH_GAMES_SUCCESS, games });

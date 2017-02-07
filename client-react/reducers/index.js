@@ -6,11 +6,13 @@
 import { combineReducers } from 'redux';
 import users from './userReducer';
 import games from './gameReducer';
+import ui from './uiReducer';
 
 // Combines all reducers to a single reducer function
 const rootReducer = combineReducers({
   users,
-  games
+  games,
+  ui
 });
 
 export default rootReducer;

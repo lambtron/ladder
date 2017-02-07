@@ -8,8 +8,10 @@ import ReactDOM from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import routes from './routes';
 
+injectTapEventPlugin();
 
 window.onload = () => {
   const store = configureStore();

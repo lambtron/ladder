@@ -11,7 +11,7 @@ export const fetchUsers = () => {
       return response.json();
     })
     .then(json => {
-      return json.data.map(({ name, gif, rating, games }) => ({
+      return json.map(({ name, gif, rating, games }) => ({
         name,
         gif,
         rating,

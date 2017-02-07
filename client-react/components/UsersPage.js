@@ -2,18 +2,19 @@
  * Created by karl on 05/02/2017.
  */
 import React from 'react';
+import { connect } from 'react-redux';
 import { fetchUsersAction } from '../actions/userActions';
 import UserList from './UserList';
 
-export default class UsersPage extends React.Component {
+class UsersPage extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchUsersAction());
   }
 
   render() {
     return (
-      <div className="home">
-        <div className="athletes-selector">
+      <div className="row">
+        <div className="col-xs-12">
           <UserList list={this.props.users}/>
         </div>
       </div>
@@ -22,7 +23,7 @@ export default class UsersPage extends React.Component {
 }
 
 const mapStateToProps = ({ users }) => ({
-  users: users
+  users: users[0]
 });
 
 export default connect(mapStateToProps)(UsersPage);

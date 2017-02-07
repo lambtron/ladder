@@ -11,11 +11,16 @@ export const fetchGames = () => {
       return response.json();
     })
     .then(json => {
-      return json.data.map(({ name, gif, rating, games }) => ({
-        name,
-        gif,
-        rating,
-        games
+      return json.map(({winner, winnerOldElo, winnerNewElo, loser, loserOldElo, loserNewElo, createdAt}) => ({
+        createdAt,
+        winner,
+        loser,
+        winnerNewElo,
+        winnerOldElo,
+        winnerDiffElo: '+' + (winnerNewElo - winnerOldElo),
+        loserNewElo,
+        loserOldElo,
+        loserDiffElo: loserNewElo - loserOldElo,
       }));
     });
 };

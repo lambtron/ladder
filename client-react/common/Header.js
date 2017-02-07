@@ -4,17 +4,49 @@
 'use strict';
 
 import React from 'react';
-import { Link, IndexLink } from 'react-router';
+import { connect } from 'react-redux';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import {drawerToggleAction} from '../actions/uiActions';
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // This binding is necessary to make `this` work in the callback
+    this.handleToggle = this.handleToggle.bind(this);
+  }
+
+  handleToggle() {
+    this.props.dispatch(drawerToggleAction());
+  }
+
   render() {
-    return (<div className="text-center">
-        <nav className="navbar navbar-default">
-          <IndexLink to="/" activeClassName="active">Rating</IndexLink>
-          {" | "}
-          <Link to="game" activeClassName="active">Games</Link>
-        </nav>
-      </div>
+    let {drawer,dispatch, ...x} = this.props;
+    return (
+      <AppBar
+        title="Title"
+        onLeftIconButtonTouchTap={this.handleToggle}
+        iconElementRight={this.props.logged ? <IconMenu
+            {...x}
+            iconButtonElement={
+              <IconButton {...x} ><MoreVertIcon /></IconButton>
+            }
+            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+          >
+            <MenuItem primaryText="Sign out"/>
+          </IconMenu> : <FlatButton {...x} label="Login"/>}
+      />
     );
   }
 }
+
+const mapStateToProps = ({ users }) => ({
+});
+
+export default connect(mapStateToProps)(Header);

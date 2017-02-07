@@ -4,31 +4,29 @@
 'use strict';
 
 import React from 'react';
+import {ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+
 
 export default class UserItem extends React.Component {
   render() {
     var player = this.props.player;
 
     var avatarStyle = {
-      "margin-right": 10 + "px",
+      "marginRight": 10 + "px",
       "width": 26 + "px",
       "height": 26 + "px",
-      "-moz-border-radius": 13 + "px",
-      "border-radius": 13 + "px"
+      "MozBorderRadius": 13 + "px",
+      "borderRadius": 13 + "px"
     };
 
     return (
-      <div style='margin: 10px 0px 10px 0px'>
-        <span>
-          <img src={player.gif} style={avatarStyle}/>
-        </span>
-        <span style='vertical-align: middle'>
-          {player.name}
-        </span>
-        <span className='pull-right'>
-          {player.rating}
-        </span>
-      </div>
+      <ListItem
+        leftAvatar={<Avatar src={player.gif} />}
+        rightIcon={<span>{player.rating}</span>}
+        primaryText={player.name}
+        secondaryText={player.games + ' played games'}
+      />
     );
   }
 }

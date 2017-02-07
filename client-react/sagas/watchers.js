@@ -8,10 +8,10 @@ import { fetchUsersSaga } from './userSaga';
 import { fetchGamesSaga } from './gameSaga';
 import * as types from '../constants/actionTypes';
 
-export default function* watchFetchUsers() {
+exports.watchFetchUsers = function* () {
   yield* takeLatest(types.FETCH_USERS_REQUEST, fetchUsersSaga);
-}
+};
 
-export default function* watchFetchGames() {
-  yield* takeLatest(types.FETCH_GAMEs_REQUEST, fetchGamesSaga);
-}
+exports.watchFetchGames = function* () {
+  yield* takeLatest(types.FETCH_GAMES_REQUEST, fetchGamesSaga);
+};
