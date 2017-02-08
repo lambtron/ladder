@@ -23,7 +23,7 @@ class UsersPage extends React.Component {
 }
 
 const mapStateToProps = ({ users }) => ({
-  users: users[0]
+  users: users
 });
 
 export default connect(mapStateToProps)(UsersPage);

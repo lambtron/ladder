@@ -21,5 +21,5 @@ export function* connectSaga({payload}) {
 }
 
 export function* logoutSaga({}) {
-  yield put({type: types.PROFILE_LOGOUT_SUCCESS, admin: false, logged: false});
+  yield put({type: types.PROFILE_LOGOUT_SUCCESS, profile: {admin: false, logged: false}});
 }

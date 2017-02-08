@@ -4,13 +4,16 @@
 'use strict';
 
 import { takeLatest } from 'redux-saga';
-import { fetchUsersSaga } from './userSaga';
+import { fetchUsersSaga, newUserSaga } from './userSaga';
 import { fetchGamesSaga } from './gameSaga';
 import { connectSaga, logoutSaga } from './profileSaga';
 import * as types from '../constants/actionTypes';
 
 exports.watchFetchUsers = function* () {
   yield* takeLatest(types.FETCH_USERS_REQUEST, fetchUsersSaga);
+};
+exports.watchNewUser = function* () {
+  yield* takeLatest(types.NEW_USER_REQUEST, newUserSaga);
 };
 
 exports.watchFetchGames = function* () {

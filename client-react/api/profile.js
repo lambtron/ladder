@@ -21,10 +21,6 @@ export const connect = (payload) => {
     return response.json();
   })
   .then(json => {
-    return json.map(({name, admin}) => ({
-      name,
-      admin,
-      logged: true
-    }));
+    return json;
   });
 };

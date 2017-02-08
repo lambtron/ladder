@@ -44,7 +44,7 @@ exports.user = {
 
   create: function *() {
     var load = this.request.body;
-    return this.body = yield User.create(load.player);
+    return this.body = yield User.create(load);
   },
 
   /**

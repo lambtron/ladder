@@ -30,9 +30,9 @@ function newUser(user) {
   return {
     name: user.name || '',
     gif: user.gif || '',
-    password: 'password',
-    admin: user.admin || false,
-    rating: 1500,
+    password: user.password || 'password',
+    admin: user.admin ? user.admin == "1" : false,
+    rating: user.rating ? parseInt(user.rating) : 1500,
     games: 0,
     createdAt: Date.now()
   };

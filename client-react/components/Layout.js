@@ -11,15 +11,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
 import {Link, IndexLink} from 'react-router';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import AdminAction from './AdminAction';
 import Header from '../common/Header';
 import LoginForm from './LoginForm';
-import {drawerToggleAction, modalNewGameToggleAction} from '../actions/uiActions';
+import {drawerToggleAction, modalNewGameToggleAction, modalNewUserToggleAction} from '../actions/uiActions';
 
 
 const muiTheme = getMuiTheme({
@@ -34,19 +32,14 @@ export class Layout extends React.Component {
 
     // This binding is necessary to make `this` work in the callback
     this.handleToggle = this.handleToggle.bind(this);
-    this.handleNewUserToggle = this.handleNewUserToggle.bind(this);
   }
 
   handleToggle() {
     this.props.dispatch(drawerToggleAction());
   }
 
-  handleNewUserToggle() {
-    this.props.dispatch(modalNewGameToggleAction());
-  }
-
   render() {
-    let buttonAdd = null;
+    let buttonAdmin = null;
     let {drawer, dispatch, profile, ...x} = this.props;
     let style = {
       container: {
@@ -58,15 +51,7 @@ export class Layout extends React.Component {
     };
 
     if (profile.admin && profile.logged) {
-      buttonAdd = <IconMenu
-        iconButtonElement={<FloatingActionButton><ContentAdd /></FloatingActionButton>}
-        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-        style={{float: "right", marginRight: 24}}
-      >
-        <MenuItem onTouchTap={this.handleNewUserToggle} primaryText="Add a game"/>
-        <MenuItem primaryText="Add a user"/>
-      </IconMenu>;
+      buttonAdmin = <AdminAction/>;
     }
 
     return (
@@ -89,7 +74,7 @@ export class Layout extends React.Component {
           </header>
           <div className="app-content" style={style.container}>
             <div style={style.containerBody}>{this.props.children}</div>
-            { buttonAdd }
+            { buttonAdmin }
           </div>
           <footer>
           </footer>

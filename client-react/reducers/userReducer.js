@@ -10,7 +10,9 @@ import init from './initialState';
 export default function (state = init.users, action) {
   switch (action.type) {
     case types.FETCH_USERS_SUCCESS:
-      return [...state, action.users];
+      return [...state, ...action.users];
+    case types.NEW_USER_SUCCESS:
+      return [...state, action.user];
     default:
       return state;
   }

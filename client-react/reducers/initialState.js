@@ -14,8 +14,14 @@ export default {
     drawer: {
       open: false
     },
+    admin_actions: {
+      open: false
+    },
     modal: {
       new_game: {
+        open: false
+      },
+      new_user: {
         open: false
       },
       login: {

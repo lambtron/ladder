@@ -19,3 +19,22 @@ export const fetchUsers = () => {
       }));
     });
 };
+
+export const newUser = (payload) => {
+  const API_ENDPOINT = '/api/user';
+
+  return fetch(API_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(json => {
+      return json;
+    });
+};
