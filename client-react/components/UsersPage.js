@@ -12,10 +12,12 @@ class UsersPage extends React.Component {
   }
 
   render() {
+    const {users} = this.props;
+
     return (
       <div className="row">
         <div className="col-xs-12">
-          <UserList list={this.props.users}/>
+          <UserList list={users}/>
         </div>
       </div>
     );

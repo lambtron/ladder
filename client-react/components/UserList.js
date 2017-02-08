@@ -9,11 +9,11 @@ import UserItem from './UserItem';
 
 export default class UserList extends React.Component {
   render() {
-    var list = this.props.list;
+    const {list} = this.props;
 
     return (
       <List>
-        {list.map(player => {
+        {list.sort(function(a, b) {return b.rating - a.rating}).map(player => {
           return <UserItem key={player.name} player={player}/>;
         })}
       </List>

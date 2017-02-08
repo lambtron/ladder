@@ -5,7 +5,7 @@
 
 import { takeLatest } from 'redux-saga';
 import { fetchUsersSaga, newUserSaga } from './userSaga';
-import { fetchGamesSaga } from './gameSaga';
+import { fetchGamesSaga, newGameSaga } from './gameSaga';
 import { connectSaga, logoutSaga } from './profileSaga';
 import * as types from '../constants/actionTypes';
 
@@ -18,6 +18,9 @@ exports.watchNewUser = function* () {
 
 exports.watchFetchGames = function* () {
   yield* takeLatest(types.FETCH_GAMES_REQUEST, fetchGamesSaga);
+};
+exports.watchNewGame = function* () {
+  yield* takeLatest(types.NEW_GAME_REQUEST, newGameSaga);
 };
 
 exports.watchConnect = function* () {

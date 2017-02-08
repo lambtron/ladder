@@ -8,11 +8,11 @@ import GameItem from './GameItem';
 
 export default class GameList extends React.Component {
   render() {
-    var list = this.props.list;
+    const {list} = this.props;
 
     return (
       <div>
-        {list.map(game => {
+        {list.sort(function(a, b) {return b.createdAt - a.createdAt}).map(game => {
           return <GameItem key={game.createdAt} game={game}/>;
         })}
       </div>

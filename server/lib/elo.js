@@ -31,8 +31,7 @@ module.exports = function *(w, l) {
   game.loser.new = loser.rating;
   User.update({ name: winner.name }, winner);
   User.update({ name: loser.name }, loser);
-  yield Game.create(game);
-  return;
+  return yield Game.create(game);
 };
 
 /**

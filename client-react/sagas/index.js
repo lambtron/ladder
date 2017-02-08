@@ -4,7 +4,7 @@
 'use strict';
 
 import {fork} from 'redux-saga/effects';
-import {watchFetchUsers, watchNewUser, watchFetchGames, watchConnect, watchLogout} from './watchers';
+import {watchFetchUsers, watchNewUser, watchFetchGames, watchNewGame, watchConnect, watchLogout} from './watchers';
 
 // Here, we register our watcher saga(s) and export as a single generator
 // function (startForeman) as our root Saga.
@@ -13,6 +13,7 @@ export default function* startForman() {
     fork(watchFetchUsers),
     fork(watchNewUser),
     fork(watchFetchGames),
+    fork(watchNewGame),
     fork(watchConnect),
     fork(watchLogout),
   ];

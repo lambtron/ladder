@@ -5,12 +5,13 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
-import {modalNewUserToggleAction, adminActionsToggleAction} from '../actions/uiActions';
+import {modalNewUserToggleAction, modalNewGameToggleAction, adminActionsToggleAction} from '../actions/uiActions';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import SocialPerson from 'material-ui/svg-icons/social/person';
 import ActionEvent from 'material-ui/svg-icons/action/event';
 import UserForm from './UserForm';
+import GameForm from './GameForm';
 
 
 export class AdminAction extends React.Component {
@@ -19,11 +20,16 @@ export class AdminAction extends React.Component {
 
     // This binding is necessary to make `this` work in the callback
     this.handleNewUserToggle = this.handleNewUserToggle.bind(this);
+    this.handleNewGameToggle = this.handleNewGameToggle.bind(this);
     this.handleAdminActionToggle = this.handleAdminActionToggle.bind(this);
   }
 
   handleNewUserToggle() {
     this.props.dispatch(modalNewUserToggleAction());
+  }
+
+  handleNewGameToggle() {
+    this.props.dispatch(modalNewGameToggleAction());
   }
 
   handleAdminActionToggle() {
@@ -39,10 +45,11 @@ export class AdminAction extends React.Component {
       };
       buttons = [
         <div key="player"><FloatingActionButton style={buttonsStyle} onTouchTap={this.handleNewUserToggle}><SocialPerson/></FloatingActionButton></div>,
-        <div key="game"><FloatingActionButton style={buttonsStyle} ><ActionEvent/></FloatingActionButton></div>
+        <div key="game"><FloatingActionButton style={buttonsStyle} onTouchTap={this.handleNewGameToggle}><ActionEvent/></FloatingActionButton></div>
       ];
       modals = [
-        <UserForm key="new-user"/>
+        <UserForm key="new-user"/>,
+        <GameForm key="new-game"/>
       ]
     }
     return (

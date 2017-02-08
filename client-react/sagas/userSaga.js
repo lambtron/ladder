@@ -26,6 +26,6 @@ export function* newUserSaga({payload}) {
     yield put({ type: types.UI_MODAL_NEW_USER_TOGGLE });
     yield put({ type: types.UI_ADMIN_ACTION_TOGGLE });
   } catch (error) {
-    yield put({ type: types.FETCH_GAMES_ERROR, error });
+    yield put({ type: types.NEW_USER_ERROR, error });
   }
 }

@@ -10,7 +10,9 @@ import init from './initialState';
 export default function (state = init.games, action) {
   switch (action.type) {
     case types.FETCH_GAMES_SUCCESS:
-      return [...state, action.games];
+      return [...state, ...action.games];
+    case types.NEW_GAME_SUCCESS:
+      return [action.game, ...state];
     default:
       return state;
   }

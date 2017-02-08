@@ -12,11 +12,15 @@ export default class GameItem extends React.Component {
 
     return (
       <Card>
-        <CardTitle title={game.winner + ' Won'} subtitle={'against ' + game.loser} actAsExpander={true}/>
+        <CardTitle title={game.winner + ' Won'}
+                   subtitle={'against ' + game.loser + ' (' + (new Date(game.createdAt)).toUTCString() + ')' }
+                   actAsExpander={true}/>
         <CardText expandable={true}>
-          {game.winner} : <span style={{"verticalAlign": "middle", "color": "green", "fontWeight": "bold"}}>+{game.winnerDiffElo}</span>
+          {game.winner} : <span
+          style={{"verticalAlign": "middle", "color": "green", "fontWeight": "bold"}}>+{game.winnerDiffElo}</span>
           <br/>
-          {game.loser} : <span style={{"verticalAlign": "middle", "color": "red", "fontWeight": "bold"}}>{game.loserDiffElo}</span>
+          {game.loser} : <span
+          style={{"verticalAlign": "middle", "color": "red", "fontWeight": "bold"}}>{game.loserDiffElo}</span>
         </CardText>
       </Card>
     );

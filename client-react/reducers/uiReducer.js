@@ -23,8 +23,8 @@ export default function (state = init.ui, action) {
       modal = {...state.modal, login: {open: !state.modal.login.open}};
       return {...state, modal: modal};
     case types.UI_ADMIN_ACTION_TOGGLE:
-      status = state.admin_actions ? state.admin_actions.open : false;
-      return {...state, admin_actions: {open: !status}};
+      status = action.open || !state.admin_actions.open;
+      return {...state, admin_actions: {open: status}};
     default:
       return state;
   }

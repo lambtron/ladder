@@ -17,7 +17,9 @@ import {Link, IndexLink} from 'react-router';
 import AdminAction from './AdminAction';
 import Header from '../common/Header';
 import LoginForm from './LoginForm';
-import {drawerToggleAction, modalNewGameToggleAction, modalNewUserToggleAction} from '../actions/uiActions';
+import { drawerToggleAction } from '../actions/uiActions';
+import { fetchUsersAction } from '../actions/userActions';
+
 
 
 const muiTheme = getMuiTheme({
@@ -36,6 +38,10 @@ export class Layout extends React.Component {
 
   handleToggle() {
     this.props.dispatch(drawerToggleAction());
+  }
+
+  componentDidMount() {
+    this.props.dispatch(fetchUsersAction());
   }
 
   render() {
