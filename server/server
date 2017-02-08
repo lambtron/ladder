@@ -19,8 +19,7 @@ exports = app = koa();
 /**
  * Setup static directory.
  */
-
-app.use(serve('client'));
+app.use(serve('client-react/static'));
 
 /**
  * Use body parser.
@@ -34,10 +33,15 @@ app.use(parser());
 
 var routes = require('./lib/routes.js');
 app.use(route.get('/', routes.index));
-app.use(route.get('/api/list', routes.list));
-app.use(route.post('/api/create', routes.create));
-app.use(route.post('/api/results', routes.results));
-app.use(route.post('/api/remove/:name', routes.remove));
+app.use(route.get('/game', routes.index));
+app.use(route.post('/connect', routes.connect, null));
+app.use(route.get('/api/user', routes.user.list));
+app.use(route.post('/api/user', routes.user.create, null));
+app.use(route.get('/api/game', routes.game.list));
+app.use(route.get('/api/game/:id', routes.game.fetch));
+app.use(route.post('/api/game', routes.game.create, null));
+app.use(route.delete('/api/game/:id', routes.game.delete));
+app.use(route.delete('/api/user/:name', routes.user.remove));
 
 /**
  * Listen on PORT.
